@@ -37,6 +37,7 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(tablet);
         ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A foldable computer, with keyboard");
         productCategoryDataStore.add(laptop);
+        System.out.println("productCategoryDataStore = " + productCategoryDataStore);
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
