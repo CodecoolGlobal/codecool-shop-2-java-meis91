@@ -46,6 +46,8 @@
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
+                    <p class="card-text" th:text="${prod.productCategory.getName()}">Product Category </p>
+                    <p class="card-text" th:text="${prod.supplier.getName()}">Product Supplier </p>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
