@@ -43,7 +43,7 @@ public class ProductController extends HttpServlet {
         } else {
             context.setVariable("category", productService.getAllCategories());
         }
-
+        context.setVariable("allCategories", productService.getAllCategories());
 
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
