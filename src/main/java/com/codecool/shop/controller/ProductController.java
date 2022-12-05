@@ -25,31 +25,33 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int categoryId = 1;
-        int supplierId = 1;
-
+        int categoryId;
+        int supplierId;
 
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductService productService = req.getQueryString().contains("category") ? new ProductService(productDataStore,productCategoryDataStore) :
-                req.getQueryString().contains("supplier") ? new ProductService(productDataStore,productSupplierDataStore) :
-                        new ProductService(productDataStore,productCategoryDataStore); //TODO: Adrian --> change here for Start page
-
-        if (req.getQueryString() != null) {
-            categoryId = req.getQueryString().contains("category") ? Integer.parseInt(req.getParameter("category")) : 1;
-            supplierId = req.getQueryString().contains("supplier") ? Integer.parseInt(req.getParameter("supplier")) : 1;
-        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("category", productService.getProductCategory(categoryId));
-        context.setVariable("products", productService.getProductsForCategory(categoryId));
-
-//        context.setVariable("category", productService.getAllCategories());
-//        //context.setVariable("allCategories", productService.getAllCategories());
-//        context.setVariable("products", productService.getProductsForCategory(1));
+        if (req.getQueryString() != null) {
+            if (req.getQueryString().contains("category")) {
+                categoryId = Integer.parseInt(req.getParameter("category"));
+                ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
+                context.setVariable("category", productService.getProductCategory(categoryId));
+                context.setVariable("products", productService.getProductsForCategory(categoryId));
+            } else if (req.getQueryString().contains("supplier")) {
+                supplierId = Integer.parseInt(req.getParameter("supplier"));
+                ProductService productService = new ProductService(productDataStore, productSupplierDataStore);
+                context.setVariable("category", productService.getProductSupplier(supplierId));  //I cheated by calling the Variable category and not supplier
+                context.setVariable("products", productService.getProductsForSupplier(supplierId));
+            } else {
+                // This part is not finished yet TODO
+                ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
+                context.setVariable("category", productService.getAllCategories());
+            }
+        }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
