@@ -45,9 +45,11 @@
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+<!--                    <p class="card-text" th:text="${iterStat.count}">yeah yeah</p>-->
+<!--                    <p class="card-text" th:text="${#request.getParameter('category')}">yeah yeah</p>-->
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
-                    <p style="display:inline"> Category: </p><a th:href="@{/(category=${prod.productCategory.getName()})}" class="card-text" th:text="${prod.productCategory.getName()}">Product Category </a><br>
-                    <p style="display:inline"> Supplier: </p><a th:href="@{/(supplier=${prod.supplier.getName()})}" class="card-text" th:text="${prod.supplier.getName()}">Product Supplier </a>
+                    <p style="display:inline"> Category: </p><a th:href="@{/(category=${prod.productCategory.getId()})}" class="card-text" th:text="${prod.productCategory.getName()}">Product Category </a><br>
+                    <p style="display:inline"> Supplier: </p><a th:href="@{/(supplier=${prod.supplier.getId()})}" class="card-text" th:text="${prod.supplier.getName()}">Product Supplier </a>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
