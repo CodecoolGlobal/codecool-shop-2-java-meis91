@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -31,7 +29,9 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("category", productService.getAllCategories());
         //context.setVariable("allCategories", productService.getAllCategories());
-        context.setVariable("products", productService.getProductsForCategory(1));
+        //context.setVariable("tablets", productService.getProductsForCategory(1));
+        //context.setVariable("laptops", productService.getProductsForCategory(2));
+        //context.setVariable("lapi", productService.);
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
