@@ -24,6 +24,8 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int categoryId;
+        int supplierId;
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
@@ -32,16 +34,20 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         if (req.getQueryString() != null) {
-            if(req.getQueryString().contains("category")){
+            if (req.getQueryString().contains("category")) {
                 categoryId = Integer.parseInt(req.getParameter("category"));
                 context.setVariable("category", productService.getProductCategory(categoryId));
-            } else if (req.getQueryString().contains("supplier")){
-                categoryId = Integer.parseInt(req.getParameter("supplier"));
-
+                context.setVariable("products", productService.getProductsForCategory(categoryId));
+            } else if (req.getQueryString().contains("supplier")) {
+                supplierId = Integer.parseInt(req.getParameter("supplier"));
+                ProductService productService = new ProductService(productDataStore, productSupplierDataStore);
+                context.setVariable("category", productService.getProductSupplier(supplierId));  //I cheated by calling the Variable category and not supplier
+                context.setVariable("products", productService.getProductsForSupplier(supplierId));
             }
 
         } else {
-            context.setVariable("category", productService.getAllCategories());
+                ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
+                context.setVariable("category", productService.getAllCategories());
         }
         context.setVariable("allCategories", productService.getAllCategories());
 
