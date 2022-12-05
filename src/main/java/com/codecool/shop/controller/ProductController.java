@@ -46,11 +46,10 @@ public class ProductController extends HttpServlet {
                 ProductService productService = new ProductService(productDataStore, productSupplierDataStore);
                 context.setVariable("category", productService.getProductSupplier(supplierId));  //I cheated by calling the Variable category and not supplier
                 context.setVariable("products", productService.getProductsForSupplier(supplierId));
-            } else {
-                // This part is not finished yet TODO
+            }
+        } else {
                 ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
                 context.setVariable("category", productService.getAllCategories());
-            }
         }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
