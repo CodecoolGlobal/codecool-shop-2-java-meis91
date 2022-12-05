@@ -2,8 +2,10 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
@@ -24,16 +26,24 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int categoryId = 1;
+        int supplierId = 1;
+
+
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ProductService productService = req.getQueryString().contains("category") ? new ProductService(productDataStore,productCategoryDataStore) :
+                req.getQueryString().contains("supplier") ? new ProductService(productDataStore,productSupplierDataStore) :
+                        new ProductService(productDataStore,productCategoryDataStore); //TODO: Adrian --> change here for Start page
 
         if (req.getQueryString() != null) {
             categoryId = req.getQueryString().contains("category") ? Integer.parseInt(req.getParameter("category")) : 1;
+            supplierId = req.getQueryString().contains("supplier") ? Integer.parseInt(req.getParameter("supplier")) : 1;
         }
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
         context.setVariable("category", productService.getProductCategory(categoryId));
         context.setVariable("products", productService.getProductsForCategory(categoryId));
 
