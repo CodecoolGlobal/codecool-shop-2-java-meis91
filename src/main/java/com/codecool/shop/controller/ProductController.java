@@ -23,22 +23,28 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int categoryId = 1;
-
-        if (req.getQueryString() != null) {
-            categoryId = req.getQueryString().contains("category") ? Integer.parseInt(req.getParameter("category")) : 1;
-        }
+        int categoryId;
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("category", productService.getAllCategories());
-        //context.setVariable("allCategories", productService.getAllCategories());
-        //context.setVariable("tablets", productService.getProductsForCategory(1));
-        //context.setVariable("laptops", productService.getProductsForCategory(2));
-        //context.setVariable("lapi", productService.);
+
+        if (req.getQueryString() != null) {
+            if(req.getQueryString().contains("category")){
+                categoryId = Integer.parseInt(req.getParameter("category"));
+                context.setVariable("category", productService.getProductCategory(categoryId));
+            } else if (req.getQueryString().contains("supplier")){
+                categoryId = Integer.parseInt(req.getParameter("supplier"));
+
+            }
+
+        } else {
+            context.setVariable("category", productService.getAllCategories());
+        }
+
+
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
