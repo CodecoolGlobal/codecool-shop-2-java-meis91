@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Payment Procedure</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/payment.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="main-content">
+        <p class="text">Shop Checkout</p>
+    </div>
+
+    <div class="centre-content">
+        <h1 class="price">2499<span>,-</span></h1>
+        <p class="course">
+            Total price!
+        </p>
+    </div>
+
+    <div class="last-content">
+        <p class="text"> Pay with:</p>
+        <button id="payPalBtn" class="pay-now-btn">
+            PayPal
+        </button>
+        <button onclick="getElementById('card-credentials').hidden = false" class="pay-now-btn">
+            Credit Card
+        </button>
+
+
+
+        <!-- <button type="button" class="pay-now-btn">
+        Netbanking options
+        </button> -->
+    </div>
+
+    <div id="myModal" class="modal">
+        <form action="/payment/paypal" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>PayPal Checkout</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <br>
+                    <label for="modal-paypal-username">PayPal Username or E-Mail: </label>
+                    <input style="position: center"type="text" id="modal-paypal-username"
+                           name="modal-username" placeholder="Enter your username here">
+                    <br>
+                    <label for="modal-paypal-password">PayPal Password: </label>
+                    <input style="position: center" type="password" id="modal-paypal-password"
+                           name="modal-password" placeholder="Enter your password here">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <form id="card-credentials" hidden="true" action="/payment/credit-card" method="post">
+        <div class="card-details">
+
+            <div class="card-number">
+                <label> Card Number </label>
+                <input
+                        type="text"
+                        class="card-number-field"
+                        placeholder="###-###-###"/>
+            </div>
+            <br />
+            <div class="date-number">
+                <label> Expiry Date </label>
+                <input type="text" class="date-number-field"
+                       placeholder="DD-MM-YY" />
+            </div>
+
+            <div class="cvv-number">
+                <label> CVV number </label>
+                <input type="text" class="cvv-number-field"
+                       placeholder="xxx" />
+            </div>
+            <div class="nameholder-number">
+                <label> Card Holder name </label>
+                <input
+                        type="text"
+                        class="card-name-field"
+                        placeholder="Enter your Name"/>
+            </div>
+            <button type="submit"
+                    class="submit-now-btn">
+                submit
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+<script src="/static/script/payment.js"></script>
+</html>
