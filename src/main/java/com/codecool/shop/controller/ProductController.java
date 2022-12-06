@@ -27,10 +27,10 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int categoryId;
         int supplierId;
-
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, productSupplierDataStore);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -38,19 +38,19 @@ public class ProductController extends HttpServlet {
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("category")) {
                 categoryId = Integer.parseInt(req.getParameter("category"));
-                ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
                 context.setVariable("category", productService.getProductCategory(categoryId));
                 context.setVariable("products", productService.getProductsForCategory(categoryId));
             } else if (req.getQueryString().contains("supplier")) {
                 supplierId = Integer.parseInt(req.getParameter("supplier"));
-                ProductService productService = new ProductService(productDataStore, productSupplierDataStore);
                 context.setVariable("category", productService.getProductSupplier(supplierId));  //I cheated by calling the Variable category and not supplier
                 context.setVariable("products", productService.getProductsForSupplier(supplierId));
             }
+
         } else {
-                ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
                 context.setVariable("category", productService.getAllCategories());
         }
+        context.setVariable("allCategories", productService.getAllCategories());
+        context.setVariable("allSupplier", productService.getAllSupplier());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
