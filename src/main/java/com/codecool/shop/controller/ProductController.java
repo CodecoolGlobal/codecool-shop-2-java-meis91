@@ -51,7 +51,7 @@ public class ProductController extends HttpServlet {
             else{
                 cartsOfUser.add(productDataStore.find(Integer.parseInt(req.getParameter("cart"))));
                 System.out.println(cartsOfUser.getAll().toString());
-                context.setVariable("cartUser", cartsOfUser.getAll());
+                //context.setVariable("cartUser", cartsOfUser.getAll());
                 context.setVariable("category", productService.getAllCategories());
             }
 
