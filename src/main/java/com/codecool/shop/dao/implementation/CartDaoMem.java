@@ -48,5 +48,24 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public int getTotalPrice(){return 0;}
+    public List<Product> getBy(Supplier supplier) {
+        return data.stream().filter(t -> t.getSupplier().equals(supplier)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Product> getBy(ProductCategory productCategory) {
+        return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public String getTotalPrice() {
+        BigDecimal totalPrice = data.stream().map(Product::getDefaultPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return String.valueOf(totalPrice) + " " + "USD";
+    }
+
+
+
+
 }

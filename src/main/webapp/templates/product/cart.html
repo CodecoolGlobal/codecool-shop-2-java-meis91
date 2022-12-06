@@ -73,7 +73,8 @@
   </div>
 </div>
 <div class="card-text">
-  <a class="btn btn-success" href="#">Pay</a>
+  <p class="lead" th:text="${total_price}"></p>
+  <a class="btn btn-success" href="/payment">Pay</a>
 </div>
 <div th:replace="footer.html :: copy"></div>
 </body>
