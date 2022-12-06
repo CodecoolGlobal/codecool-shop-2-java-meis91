@@ -1,8 +1,10 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -30,6 +32,7 @@ public class ProductController extends HttpServlet {
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        CartDao cartsOfUser = CartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, productSupplierDataStore);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -44,6 +47,12 @@ public class ProductController extends HttpServlet {
                 supplierId = Integer.parseInt(req.getParameter("supplier"));
                 context.setVariable("category", productService.getProductSupplier(supplierId));  //I cheated by calling the Variable category and not supplier
                 context.setVariable("products", productService.getProductsForSupplier(supplierId));
+            }
+            else{
+                cartsOfUser.add(productDataStore.find(Integer.parseInt(req.getParameter("cart"))));
+                System.out.println(cartsOfUser.getAll().toString());
+                context.setVariable("cartUser", cartsOfUser.getAll());
+                context.setVariable("category", productService.getAllCategories());
             }
 
         } else {
