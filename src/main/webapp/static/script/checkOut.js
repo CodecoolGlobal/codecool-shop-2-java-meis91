@@ -13,7 +13,7 @@ userRegistration.addEventListener("submit", function (evt) {
     console.log(checkoutOrPayBtn.innerHTML)
     checkoutOrPayBtn.innerHTML = `
     <h2>Registration successful</h2>
-    <h3>You continue with payment, press the button below</h3>
+    <h3>To continue with payment, press the button below</h3>
     <a class="btn btn-success" id="payBtn" href="/payment" >Pay</a>
     `
     modal.style.display = "none";
