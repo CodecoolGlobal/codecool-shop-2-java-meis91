@@ -58,32 +58,15 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:each="supplier,iterStat : ${allSupplier}" th:text="${supplier.name}" th:href="@{/(supplier=${supplier.getId()})}"></a>
-
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shopping-cart/">Shopping Cart</a>
                 </li>
             </ul>
         </div>
     </nav>
 </div>
-<!--<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Codecool Shop</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu" >
-                    <li th:each="category,iterStat : ${category}" th:text="${category.name}"><a th:href="@{/(category=${prod.productCategory.getId()})}"></a></li>
-                </ul>
-            </li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
-        </ul>
-    </div>
-</nav>-->
 
 <div class="container">
     <div class="card" th:each="category,iterStat : ${category}">
@@ -103,8 +86,7 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="card-text">
-                            <a class="btn btn-success" href="#">Add to cart</a>
-                            <a class="btn btn-success" href="/payment"> Buy now insantly! </a>
+                            <a class="btn btn-success" th:href="@{/(cart=${prod.getId()})}">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -130,6 +112,7 @@
                     </div>
                     <div class="card-text">
                         <a class="btn btn-success" href="#">Add to cart</a>
+                        <button>Add to cart</button>
                     </div>
                 </div>
             </div>
