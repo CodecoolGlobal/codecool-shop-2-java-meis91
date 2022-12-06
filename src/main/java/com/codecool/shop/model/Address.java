@@ -4,11 +4,11 @@ public class Address {
 
     private String country;
     private String city;
-    private int zipcode;
+    private String zipcode;
     private String address;
     private AddressType addressType;
 
-    public Address(String country, String city, int zipcode, String address, AddressType addressType) {
+    public Address(String country, String city, String zipcode, String address, AddressType addressType) {
         this.country = country;
         this.city = city;
         this.zipcode = zipcode;
@@ -32,11 +32,11 @@ public class Address {
         this.city = city;
     }
 
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 

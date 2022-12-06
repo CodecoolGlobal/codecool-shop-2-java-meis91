@@ -7,7 +7,7 @@ public class Customer {
     private String eMail;
     private String password;
 
-    private int phoneNumber;
+    private String phoneNumber;
 
     private Cart cart;
 
@@ -15,11 +15,12 @@ public class Customer {
 
     private Address billingAddress;
 
-    public Customer(String userName, String eMail, int phoneNumber, Cart cart) {
+    public Customer(String userName, String eMail, String phoneNumber, Address billingAddress, Address shippingAddress) {
         this.userName = userName;
         this.eMail = eMail;
         this.phoneNumber = phoneNumber;
-        this.cart = cart;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
     }
 
     public int getId() {
