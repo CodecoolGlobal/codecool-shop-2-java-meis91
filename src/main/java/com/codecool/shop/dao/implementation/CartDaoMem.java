@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,5 +56,11 @@ public class CartDaoMem implements CartDao {
     public List<Product> getBy(ProductCategory productCategory) {
         return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public String getTotalPrice() {
+        BigDecimal totalPrice = data.stream().map(Product::getDefaultPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return String.valueOf(totalPrice) + " " + "USD";
     }
 }

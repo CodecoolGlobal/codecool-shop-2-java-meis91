@@ -67,14 +67,15 @@
               <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
               <p class="lead" th:text="'Amount:' + ${prod.getCountOfProduct()}">100 USD</p>
             </div>
-            <div class="card-text">
-              <a class="btn btn-success" href="#">Pay</a>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="card-text">
+  <p class="lead" th:text="${total_price}"></p>
+  <a class="btn btn-success" href="/payment">Pay</a>
 </div>
 <div th:replace="footer.html :: copy"></div>
 </body>

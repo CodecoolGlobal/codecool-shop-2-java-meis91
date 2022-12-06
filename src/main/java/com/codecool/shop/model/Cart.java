@@ -1,5 +1,6 @@
 package com.codecool.shop.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Cart {
@@ -19,4 +20,6 @@ public class Cart {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+
 }
