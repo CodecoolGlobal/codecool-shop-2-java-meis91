@@ -54,6 +54,7 @@ public class CartController extends HttpServlet {
         }
         context.setVariable("products", cartService.getCart());
         context.setVariable("total_price", cartService.getTotalPrice());
+        resp.getWriter().println("<!-- -->");
         engine.process("product/cart.html", context, resp.getWriter());
     }
     @Override
@@ -80,6 +81,8 @@ public class CartController extends HttpServlet {
         shippingAddress = new Address(shippingCountry, shippingCity, shippingZipCode, shippingAdd, AddressType.SHIPPING);
         customer = new Customer(name, email, phoneNumber, billingAddress, shippingAddress);
         System.out.println(name);
-        doGet(req, resp);
+        PaymentController paymentController = new PaymentController();
+        paymentController.doGet(req, resp);
+
     }
 }

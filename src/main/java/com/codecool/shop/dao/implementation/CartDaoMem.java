@@ -16,10 +16,11 @@ public class CartDaoMem implements CartDao {
 
     private static CartDaoMem instance = null;
 
-    private CartDaoMem(){
+    private CartDaoMem() {
 
     }
-    public static CartDaoMem getInstance(){
+
+    public static CartDaoMem getInstance() {
         if (instance == null) {
             instance = new CartDaoMem();
         }
