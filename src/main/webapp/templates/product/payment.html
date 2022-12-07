@@ -76,7 +76,8 @@
     </div>
 
     <div id="myModal" class="modal">
-        <form action="/payment/paypal" method="post">
+        <form name="paypal-form" action="/payment/order-confirmation" method="post">
+            <input type="hidden" name="form-type" value="paypal-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>PayPal Checkout</h2>
@@ -100,31 +101,30 @@
     </div>
 
 
-    <form id="card-credentials" hidden="true" action="/payment/credit-card" method="post">
+    <form name="card-form" id="card-credentials" hidden="true" action="/payment/order-confirmation" method="post">
+        <input type="hidden" name="form-type" value="card-form">
         <div class="card-details">
 
             <div class="card-number">
                 <label> Card Number </label>
-                <input
-                        type="text"
-                        class="card-number-field"
-                        placeholder="###-###-###"/>
+                <input  name="card-number" type="text"
+                        class="card-number-field" placeholder="###-###-###"/>
             </div>
             <br />
             <div class="date-number">
                 <label> Expiry Date </label>
-                <input type="text" class="date-number-field"
-                       placeholder="DD-MM-YY" />
+                <input name="expiry-date" type="text"
+                       class="date-number-field" placeholder="DD-MM-YY" />
             </div>
 
             <div class="cvv-number">
                 <label> CVV number </label>
-                <input type="text" class="cvv-number-field"
-                       placeholder="xxx" />
+                <input name="cvv-number" type="text"
+                       class="cvv-number-field" placeholder="xxx" />
             </div>
             <div class="nameholder-number">
                 <label> Card Holder name </label>
-                <input
+                <input  name="card-holder-name"
                         type="text"
                         class="card-name-field"
                         placeholder="Enter your Name"/>
