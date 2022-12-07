@@ -60,7 +60,8 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public String getTotalPrice() {
-        BigDecimal totalPrice = data.stream().map(Product::getDefaultPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalPrice = data.stream().map(Product -> Product.getDefaultPrice().multiply(BigDecimal.valueOf(Product.getCountOfProduct())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         return String.valueOf(totalPrice) + " " + "USD";
     }
 }
