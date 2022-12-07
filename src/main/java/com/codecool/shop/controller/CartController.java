@@ -6,6 +6,7 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.model.Address;
 import com.codecool.shop.model.AddressType;
 import com.codecool.shop.model.Customer;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.service.CartService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -26,6 +27,31 @@ public class CartController extends HttpServlet {
         CartService cartService = new CartService(cartData);
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        if (req.getQueryString() != null) {
+            if (req.getQueryString().contains("remove")) {
+                Product delete = null;
+                for (Product p: cartData.getAll() ) {
+                    if(p.getId() == Integer.parseInt(req.getParameter("remove"))){
+                        if(p.getCountOfProduct() != 1){
+                            p.setCountOfProduct(p.getCountOfProduct() - 1);
+                        }
+                        else{
+                            delete = p;
+                        }
+                    }
+                }
+                cartData.getAll().remove(delete);
+            }
+            if (req.getQueryString().contains("add")) {
+                if (req.getQueryString().contains("add")) {
+                    for (Product p: cartData.getAll() ) {
+                        if(p.getId() == Integer.parseInt(req.getParameter("add"))){
+                                p.setCountOfProduct(p.getCountOfProduct() + 1);
+                        }
+                    }
+                }
+            }
+        }
         context.setVariable("products", cartService.getCart());
         context.setVariable("total_price", cartService.getTotalPrice());
         engine.process("product/cart.html", context, resp.getWriter());

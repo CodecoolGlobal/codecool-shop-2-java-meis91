@@ -66,6 +66,8 @@
             <div class="card-text">
               <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
               <p class="lead" th:text="'Amount:' + ${prod.getCountOfProduct()}">100 USD</p>
+              <a th:href="@{/shopping-cart/(add=${prod.getId()})}">+</a>
+              <a th:href="@{/shopping-cart/(remove=${prod.getId()})}">-</a>
             </div>
           </div>
         </div>
