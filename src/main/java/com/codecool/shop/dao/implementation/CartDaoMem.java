@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.model.Customer;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class CartDaoMem implements CartDao {
 
     private List<Product> data = new ArrayList<>();
+    private Customer customer;
 
     private static CartDaoMem instance = null;
 
@@ -64,5 +66,25 @@ public class CartDaoMem implements CartDao {
         BigDecimal totalPrice = data.stream().map(Product -> Product.getDefaultPrice().multiply(BigDecimal.valueOf(Product.getCountOfProduct())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return String.valueOf(totalPrice) + " " + "USD";
+    }
+    @Override
+    public String getTax() {
+        BigDecimal tax = data.stream().map(Product -> Product.getDefaultPrice().multiply(BigDecimal.valueOf(Product.getCountOfProduct())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add).multiply(BigDecimal.valueOf(0.2));
+        return String.valueOf(tax) + " " + "USD";
+    }
+    @Override
+    public String getTaxedTotalPrice() {
+        BigDecimal totalPrice = data.stream().map(Product -> Product.getDefaultPrice().multiply(BigDecimal.valueOf(Product.getCountOfProduct())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add).multiply(BigDecimal.valueOf(1.2));
+        return String.valueOf(totalPrice) + " " + "USD";
+    }
+    @Override
+    public Customer getCustomer() {
+        return customer;
+    }
+    @Override
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

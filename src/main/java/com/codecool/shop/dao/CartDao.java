@@ -1,5 +1,6 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.model.Customer;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -18,4 +19,9 @@ public interface CartDao {
     List<Product> getBy(ProductCategory productCategory);
 
     String getTotalPrice();
+    String getTax();
+    String getTaxedTotalPrice();
+
+    Customer getCustomer();
+    void setCustomer(Customer customer);
 }

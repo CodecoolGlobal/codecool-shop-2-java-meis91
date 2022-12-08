@@ -7,8 +7,8 @@ public class Cart {
 
 
     private List<Product> shoppingCart;
-    private Customer customer;
 
+    private Customer customer;
     public Cart() {
 
     }
@@ -20,6 +20,7 @@ public class Cart {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
 
 
 }
