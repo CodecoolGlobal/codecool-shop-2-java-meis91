@@ -15,16 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/payment/order-confirmation"})
 public class ConfirmationController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //check if inputs are legit
-        //if not legit:
-        //error message
-        //else:
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         CartDao cartData = CartDaoMem.getInstance();
@@ -36,8 +32,7 @@ public class ConfirmationController extends HttpServlet {
             context.setVariable("tax", cartService.getTax());
             context.setVariable("taxedTotalPrice", cartService.getTaxedTotalPrice());
 
-            if (cartService.getCustomer() == null || cartService.getCustomer().getShippingAddress() == null ||
-                    cartService.getCustomer().getBillingAddress() == null || cartService.getCart() == null) {
+            if (Objects.equals(cartService.getCustomer().getShippingAddress().getAddress(), "") || cartService.getCart().isEmpty()) {
                 throw new NullPointerException("No Address / Cart Items");
             }
             engine.process("product/confirmation.html", context, resp.getWriter());
