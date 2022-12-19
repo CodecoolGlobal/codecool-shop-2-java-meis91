@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementationMem.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,7 +25,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int categoryId;
@@ -52,6 +54,7 @@ public class ProductController extends HttpServlet {
                 for (Product product: cartsOfUser.getAll()) {
                     if(product.getId() == Integer.parseInt(req.getParameter("cart"))){
                         product.setCountOfProduct(product.getCountOfProduct() + 1 );
+                        logger.info("Added one more product to cart: {}", product);
                         test = false;
                     }
                 }

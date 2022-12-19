@@ -8,6 +8,8 @@ import com.codecool.shop.model.AddressType;
 import com.codecool.shop.model.Customer;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.CartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -20,6 +22,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/shopping-cart/"})
 public class CartController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,6 +35,7 @@ public class CartController extends HttpServlet {
                 Product delete = null;
                 for (Product p: cartData.getAll() ) {
                     if(p.getId() == Integer.parseInt(req.getParameter("remove"))){
+                        logger.info("Decreased amount of product by 1: {}", p);
                         if(p.getCountOfProduct() != 1){
                             p.setCountOfProduct(p.getCountOfProduct() - 1);
                         }
@@ -46,6 +50,7 @@ public class CartController extends HttpServlet {
                 if (req.getQueryString().contains("add")) {
                     for (Product p: cartData.getAll() ) {
                         if(p.getId() == Integer.parseInt(req.getParameter("add"))){
+                            logger.info("Increased amount of product by 1: {}", p);
                                 p.setCountOfProduct(p.getCountOfProduct() + 1);
                         }
                     }
