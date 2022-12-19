@@ -4,6 +4,8 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.service.CartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/payment/order-confirmation"})
 public class ConfirmationController extends HttpServlet {
-
+    private static final Logger logger = LoggerFactory.getLogger(ConfirmationController.class);
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -31,6 +33,7 @@ public class ConfirmationController extends HttpServlet {
             context.setVariable("taxedTotalPrice", cartService.getTaxedTotalPrice());
 
             if (Objects.equals(cartService.getCustomer().getShippingAddress().getAddress(), "") || cartService.getCart().isEmpty()) {
+                logger.info("No Address / Cart Items");
                 throw new NullPointerException("No Address / Cart Items");
             }
             engine.process("product/confirmation.html", context, resp.getWriter());
