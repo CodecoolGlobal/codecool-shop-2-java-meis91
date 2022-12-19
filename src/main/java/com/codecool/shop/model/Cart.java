@@ -6,9 +6,9 @@ import java.util.List;
 public class Cart {
 
 
-    private List<Product> shoppingCart;
 
     private Customer customer;
+    private List<Product> shoppingCart;
     public Cart() {
 
     }

@@ -2,6 +2,7 @@ package com.codecool.shop.model;
 
 public class Address {
 
+    private int id;
     private String country;
     private String city;
     private String zipcode;
