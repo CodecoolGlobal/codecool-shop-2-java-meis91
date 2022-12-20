@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS public.product;
 CREATE TABLE public.product
 (
-    id               serial  NOT NULL PRIMARY KEY,
+    id               INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name             text    NOT NULL,
     description      text,
     default_price    decimal NOT NULL,
@@ -41,20 +41,38 @@ DROP TABLE IF EXISTS public.cart;
 CREATE TABLE public.cart
 (
     id          serial NOT NULL PRIMARY KEY,
-    customer_id int    NOT NULL,
+    customer_id int,
     products    int[]
 );
 DROP TABLE IF EXISTS public.customer;
 CREATE TABLE public.customer
 (
-    id                  serial NOT NULL PRIMARY KEY,
-    user_name           text   NOT NULL,
+    id                  serial NOT NULL PRIMARY KEY ,
+    name                text   NOT NULL,
     email               text   NOT NULL,
     passwort            text   NOT NULL,
-    cart_id             int    NOT NULL,
-    billing_address_id  int    NOT NULL,
-    shipping_address_id int    NOT NULL
+    cart_id             int,
+    billing_address_id  int,
+    shipping_address_id int
 );
+
+INSERT INTO supplier (name, description)
+VALUES ('Amazon', 'Digital content and services'),
+       ('Lenovo', 'Computers'),
+       ('Dell', 'Computers'),
+       ('Appel', 'Computers');
+
+INSERT INTO category (name, department, description)
+VALUES ('Tablet','Hardware', 'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.'),
+       ('Laptop','Hardware', 'A foldable computer, with keyboard.'),
+       ('PC','Hardware', 'A classic computer, with keyboard.');
+
+INSERT INTO product (name, description, default_price, default_currency, supplier_id, category_id)
+VALUES ('Amazon Fire','No description yet', '49.9', 'USD', '1', '1'),
+       ('Lenovo IdeaPad Miix 700','No description yet', '479', 'USD', '2', '1'),
+       ('Dell XPS 13','No description yet', '1298', 'USD', '3', '2'),
+       ('Mac Pro','No description yet', '6499', 'USD', '4', '3');
+
 
 
 ALTER TABLE ONLY public.product

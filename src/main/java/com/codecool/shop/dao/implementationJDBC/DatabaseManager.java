@@ -23,6 +23,8 @@ public class DatabaseManager {
 
         }
 
+
+
        /* public void savePlayer(Player player) {
             model = new PlayerModel(player);
             playerDao.add(model);
