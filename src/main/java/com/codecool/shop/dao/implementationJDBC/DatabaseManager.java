@@ -58,9 +58,9 @@ public class DatabaseManager {
 
         public DataSource connect() throws SQLException {
             PGSimpleDataSource dataSource = new PGSimpleDataSource();
-            String dbName = System.getenv("DB_NAME");
-            String user = System.getenv("USER_NAME");
-            String password = System.getenv("PASSWORD");
+            String dbName = "codecoolshop"; //System.getenv("DB_NAME");
+            String user = "adrian"; //System.getenv("USER_NAME");
+            String password = "sql"; //System.getenv("PASSWORD");
 
             dataSource.setDatabaseName(dbName);
             dataSource.setUser(user);

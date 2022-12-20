@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/"})
@@ -39,8 +40,9 @@ public class ProductController extends HttpServlet {
         DatabaseManager databaseManager = new DatabaseManager();
         try {
             DataSource dataSource = databaseManager.connect();
+            Connection connection = dataSource.getConnection();
             ProductDao productDataStore1 = new ProductDaoJdbc(dataSource);
-            productDataStore1.getAll();
+            System.out.println(productDataStore1.getAll()); // I'm here (rethink the system)
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
