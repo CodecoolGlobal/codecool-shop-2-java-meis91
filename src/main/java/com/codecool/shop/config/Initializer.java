@@ -39,9 +39,9 @@ public class Initializer implements ServletContextListener {
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
-        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A foldable computer, with keyboard");
+        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A foldable computer, with keyboard.");
         productCategoryDataStore.add(laptop);
-        ProductCategory pc = new ProductCategory("PC", "Hardware", "A classic computer, with keyboard");
+        ProductCategory pc = new ProductCategory("PC", "Hardware", "A classic computer, with keyboard.");
         productCategoryDataStore.add(pc);
 
         //setting up products and printing it
@@ -49,6 +49,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Dell XPS 13", new BigDecimal("1298"), "USD", "Best of everything", laptop, dell));
-        productDataStore.add(new Product("Mac Mac Pro", new BigDecimal("6499"), "USD", "Looks like a parmesan grater", pc, mac));
+        productDataStore.add(new Product("Mac Pro", new BigDecimal("6499"), "USD", "Looks like a parmesan grater", pc, mac));
     }
 }
