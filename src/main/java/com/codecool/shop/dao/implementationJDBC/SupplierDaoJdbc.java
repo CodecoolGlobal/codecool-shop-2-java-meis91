@@ -6,11 +6,11 @@ import com.codecool.shop.model.Supplier;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class SupplierDaoJdbc extends DaoJdbc implements SupplierDao {
-    public SupplierDaoJdbc(DataSource dataSource) {
-        super(dataSource);
-    }
+public class SupplierDaoJdbc  implements SupplierDao {
 
+   /* public SupplierDaoJdbc(DataSource dataSource) {
+        super(dataSource);
+    }*/
     @Override
     public void add(Supplier supplier) {
 

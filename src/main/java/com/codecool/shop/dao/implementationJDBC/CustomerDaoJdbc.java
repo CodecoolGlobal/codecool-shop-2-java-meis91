@@ -6,10 +6,8 @@ import com.codecool.shop.model.Customer;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class CustomerDaoJdbc extends DaoJdbc implements CustomerDao {
-    public CustomerDaoJdbc(DataSource dataSource) {
-        super(dataSource);
-    }
+public class CustomerDaoJdbc  implements CustomerDao {
+
 
     @Override
     public void add(Customer customer) {

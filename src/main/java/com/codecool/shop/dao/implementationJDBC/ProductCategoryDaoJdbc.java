@@ -4,12 +4,13 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 
-public class ProductCategoryDaoJdbc extends DaoJdbc implements ProductCategoryDao {
-    public ProductCategoryDaoJdbc(DataSource dataSource) {
+public class ProductCategoryDaoJdbc implements ProductCategoryDao {
+   /* public ProductCategoryDaoJdbc(DataSource dataSource) throws SQLException {
         super(dataSource);
-    }
+    }*/
 
     @Override
     public void add(ProductCategory category) {

@@ -4,6 +4,8 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementationJDBC.DatabaseManager;
+import com.codecool.shop.dao.implementationJDBC.ProductDaoJdbc;
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.dao.implementationMem.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementationMem.ProductDaoMem;
@@ -21,7 +23,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -32,6 +36,16 @@ public class ProductController extends HttpServlet {
         int supplierId;
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
+        DatabaseManager databaseManager = new DatabaseManager();
+        try {
+            DataSource dataSource = databaseManager.connect();
+            ProductDao productDataStore1 = new ProductDaoJdbc(dataSource);
+            productDataStore1.getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         CartDao cartsOfUser = CartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, productSupplierDataStore);
