@@ -47,10 +47,9 @@ CREATE TABLE public.cart
 DROP TABLE IF EXISTS public.customer;
 CREATE TABLE public.customer
 (
-    id                  serial NOT NULL PRIMARY KEY ,
-    name                text   NOT NULL,
+    id                  serial NOT NULL PRIMARY KEY,
     email               text   NOT NULL,
-    passwort            text   NOT NULL,
+    password            text   NOT NULL,
     cart_id             int,
     billing_address_id  int,
     shipping_address_id int

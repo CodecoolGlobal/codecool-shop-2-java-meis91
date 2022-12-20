@@ -24,7 +24,7 @@ public class CustomerDaoJdbc implements CustomerDao {
     public void add(Customer customer) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = """
-                    INSERT INTO customer (email, passwort)
+                    INSERT INTO customer (email, password)
                     VALUES (?, ?)
                     """;
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
