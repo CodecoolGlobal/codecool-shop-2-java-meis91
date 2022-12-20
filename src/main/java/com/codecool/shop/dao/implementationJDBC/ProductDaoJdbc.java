@@ -43,31 +43,22 @@ public class ProductDaoJdbc implements ProductDao {
             String sql = """
                     SELECT *
                     FROM product
-                    JOIN category c on c.id = product.category_id
-                    JOIN supplier s on s.id = product.supplier_id
                     """;
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             List<Product> result = new ArrayList<>();
+            SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
+            ProductCategoryDaoJdbc productCategoryDaoJdbc = new ProductCategoryDaoJdbc(dataSource);
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 BigDecimal price = rs.getBigDecimal("default_price");
                 String currency = rs.getString("default_currency");
-                String cName = rs.getString(9);
-                //System.out.println("cName = " + cName);
-                //ProductCategory productCategory = new ProductCategory(cName, rs.getString(11), rs.getString(10));
-                Supplier supplier = new Supplier(rs.getString(13), rs.getString(14));
-                //Product product = new Product(name, price, currency, description, productCategory, supplier);
-                //result.add(product);
-                //System.out.println(name + " " + description);
-                /*Product product = new Product(name, description, )
-                HashMap<String, String> gameState = new HashMap<>();
-                gameState.put("id", rs.getString(1));
-                gameState.put("date", rs.getString(2));
-                gameState.put("playerId", rs.getString(3));
-                gameState.put("playerName", rs.getString(4));
-                result.add(gameState);*/
+                int supplierId = rs.getInt("supplier_id");
+                int categoryId = rs.getInt("category_id");
+                Product product = new Product(id, name, price, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
+                result.add(product);
             }
             return result;
         } catch (SQLException e) {

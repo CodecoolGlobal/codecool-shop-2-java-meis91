@@ -36,11 +36,15 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
                     """;
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
             String name = rs.getString("name");
             String description = rs.getString("description");
             String department = rs.getString("department");
-            return new ProductCategory(id, name, department, description);
+            ProductCategory productCategory = new ProductCategory(id, name, department, description);
+            return productCategory;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error while finding category", e);
@@ -57,7 +61,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = """
                     SELECT *
-                    FROM category
+                    FROM product
                     """;
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<ProductCategory> result = new ArrayList<>();
