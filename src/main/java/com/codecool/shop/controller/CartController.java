@@ -85,7 +85,6 @@ public class CartController extends HttpServlet {
         billingAddress = new Address(billingCountry, billingCity, billingZipCode, billingAdd, AddressType.BILLING);
         shippingAddress = new Address(shippingCountry, shippingCity, shippingZipCode, shippingAdd, AddressType.SHIPPING);
         customer = new Customer(name, email, phoneNumber, billingAddress, shippingAddress);
-        System.out.println(name);
         PaymentController paymentController = new PaymentController();
         paymentController.doGet(req, resp);
 

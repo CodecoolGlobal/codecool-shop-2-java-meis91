@@ -6,9 +6,9 @@ import java.util.List;
 public class Cart {
 
 
-
     private Customer customer;
     private List<Product> shoppingCart;
+
     public Cart() {
 
     }
@@ -20,7 +20,6 @@ public class Cart {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
 
 
 }

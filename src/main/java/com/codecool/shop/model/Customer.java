@@ -1,23 +1,17 @@
 package com.codecool.shop.model;
 
 public class Customer {
-
     private int id;
-    private String userName;
-    private String eMail;
-    private String password;
-
+    private final String eMail;
+    private String hashedPassword;
     private String phoneNumber;
-
     private Cart cart;
-
     private Address shippingAddress;
-
     private Address billingAddress;
 
-    public Customer(String userName, String eMail, String phoneNumber, Address billingAddress, Address shippingAddress) {
-        this.userName = userName;
+    public Customer(String eMail, String hashedPassword, String phoneNumber, Address billingAddress, Address shippingAddress) {
         this.eMail = eMail;
+        this.hashedPassword = hashedPassword;
         this.phoneNumber = phoneNumber;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
@@ -31,28 +25,26 @@ public class Customer {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getEMail() {
         return eMail;
     }
 
-    public void setEMail(String eMail) {
-        this.eMail = eMail;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public Cart getCart() {

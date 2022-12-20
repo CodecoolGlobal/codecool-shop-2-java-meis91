@@ -1,7 +1,10 @@
 package com.codecool.shop.dao.implementationJDBC;
 
+import com.codecool.shop.controller.RegistrationController;
 import com.codecool.shop.dao.*;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Date;
@@ -11,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseManager {
+
+        private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+
         private CartDao cartDao;
         private CustomerDao customerDao;
         private ProductCategoryDao productCategoryDao;
@@ -57,13 +63,15 @@ public class DatabaseManager {
 
         public DataSource connect() throws SQLException {
             PGSimpleDataSource dataSource = new PGSimpleDataSource();
-            String dbName = System.getenv("DB_NAME");
-            String user = System.getenv("USER_NAME");
-            String password = System.getenv("PASSWORD");
+            String dbName = DBConnectionData.DB_NAME.getEnvVariable();
+            String user = DBConnectionData.USER_NAME.getEnvVariable();
+            String password = DBConnectionData.PASSWORD.getEnvVariable();
 
             dataSource.setDatabaseName(dbName);
             dataSource.setUser(user);
             dataSource.setPassword(password);
+
+            logger.info("Got following connection info: {}, {}, {}", dbName, user, password);
 
             System.out.println("Trying to connect");
             dataSource.getConnection().close();

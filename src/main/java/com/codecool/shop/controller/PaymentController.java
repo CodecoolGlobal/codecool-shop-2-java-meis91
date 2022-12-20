@@ -34,8 +34,8 @@ public class PaymentController extends HttpServlet {
         CustomerService customerService = new CustomerService(customerData);
 
         Customer currentCustomer = new Customer(
-                req.getParameter("modal-name"),
                 req.getParameter("modal-email"),
+                null,
                 req.getParameter("modal-phone-number"),
                 new Address(
                         req.getParameter("modal-country-billing"),
@@ -52,7 +52,7 @@ public class PaymentController extends HttpServlet {
                         AddressType.SHIPPING
                 )
         );
-        logger.info("Received customer data for: {}, {}", currentCustomer.getId(), currentCustomer.getUserName());
+        logger.info("Received customer data for: {}, {}", currentCustomer.getId(), currentCustomer.getEMail());
         customerData.add(currentCustomer);
         cartData.setCustomer(currentCustomer);
 
