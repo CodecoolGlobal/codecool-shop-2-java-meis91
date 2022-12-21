@@ -38,11 +38,11 @@ public class ProductController extends HttpServlet {
         try {
             DataSource dataSource = databaseManager.connect();
             ProductDao productDataStore = new ProductDaoJdbc(dataSource);
-            System.out.println(productDataStore.getAll());
             ProductService productService = new ProductService(productDataStore);
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
             context.setVariable("allProducts", productDataStore.getAll());
+
             context.setVariable("allCategories", productService.getAllCategories());
             context.setVariable("allSupplier", productService.getAllSupplier());
             engine.process("product/products.html", context, resp.getWriter());
