@@ -1,48 +1,61 @@
 package com.codecool.shop.service;
 
-import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductService{
-    private ProductDao productDao;
-    private ProductCategoryDao productCategoryDao;
-    private SupplierDao supplierDao;
+    private final ProductDao productDao;
 
-    public ProductService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao) {
+
+    public ProductService(ProductDao productDao) {
         this.productDao = productDao;
-        this.productCategoryDao = productCategoryDao;
-        this.supplierDao = supplierDao;
+
     }
 
-    public ProductCategory getProductCategory(int categoryId){
-        return productCategoryDao.find(categoryId);
+    public Optional<ProductCategory> getProductCategory(int categoryId){
+        return productDao.getAll().stream()
+                .filter(product -> product.getProductCategory().getId() == categoryId)
+                .map(Product::getProductCategory)
+                .findFirst();
+
     }
 
     public List<Product> getProductsForCategory(int categoryId){
-        var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        return productDao.getAll().stream()
+                .filter(product -> product.getProductCategory().getId() == categoryId)
+                .toList();
     }
 
     public  List<ProductCategory> getAllCategories(){
-        return productCategoryDao.getAll();
+        return productDao.getAll().stream()
+                .map(Product::getProductCategory)
+                .distinct()
+                .toList();
+
     }
 
-    public Supplier getProductSupplier(int supplierId){
-        return supplierDao.find(supplierId);
+    public Optional<Supplier> getProductSupplier(int supplierId){
+        return productDao.getAll().stream()
+                .filter(product -> product.getSupplier().getId() == supplierId)
+                .map(Product::getSupplier)
+                .findFirst();
     }
 
     public List<Product> getProductsForSupplier(int supplierId){
-        var supplier = supplierDao.find(supplierId);
-        return productDao.getBy(supplier);
+        return productDao.getAll().stream()
+                .filter(product -> product.getSupplier().getId() == supplierId)
+                .toList();
     }
 
     public  List<Supplier> getAllSupplier(){
-        return supplierDao.getAll();
+        return productDao.getAll().stream()
+                .map(Product::getSupplier)
+                .distinct()
+                .toList();
     }
 }

@@ -67,11 +67,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- See comment at jetty plugin -->
-        <!-- <dependency> -->
-        <!--   <groupId>org.eclipse.jetty</groupId> -->
-        <!--   <artifactId>jetty-io</artifactId> -->
-        <!--   <version>${jetty.version}</version> -->
-        <!-- </dependency> -->
+        <!-- <dependency>
+           <groupId>org.eclipse.jetty</groupId>
+           <artifactId>jetty-io</artifactId>
+
+             <version>${jetty.version}</version>
+         </dependency>-->
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>

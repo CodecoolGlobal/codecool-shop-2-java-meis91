@@ -69,6 +69,7 @@ VALUES ('Tablet','Hardware', 'A tablet computer, commonly shortened to tablet, i
 INSERT INTO product (name, description, default_price, default_currency, supplier_id, category_id)
 VALUES ('Amazon Fire','No description yet', '49.9', 'USD', '1', '1'),
        ('Lenovo IdeaPad Miix 700','No description yet', '479', 'USD', '2', '1'),
+       ('Amazon Fire HD 8', 'Amazons latest Fire HD 8 tablet is a great value for media consumption', '89', 'USD', '1', '1' ),
        ('Dell XPS 13','No description yet', '1298', 'USD', '3', '2'),
        ('Mac Pro','No description yet', '6499', 'USD', '4', '3');
 

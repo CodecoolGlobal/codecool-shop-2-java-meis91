@@ -33,23 +33,25 @@ public class ProductController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int categoryId;
-        int supplierId;
-        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+
         DatabaseManager databaseManager = new DatabaseManager();
         try {
             DataSource dataSource = databaseManager.connect();
-            Connection connection = dataSource.getConnection();
-            ProductDao productDataStore1 = new ProductDaoJdbc(dataSource);
-            System.out.println(productDataStore1.getAll()); // I'm here (rethink the system)
-            //ProductService productService = new ProductService(productDataStore, productCategoryDataStore, productSupplierDataStore);
+            ProductDao productDataStore = new ProductDaoJdbc(dataSource);
+            System.out.println(productDataStore.getAll());
+            ProductService productService = new ProductService(productDataStore);
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            context.setVariable("allProducts", productDataStore.getAll());
+            context.setVariable("allCategories", productService.getAllCategories());
+            context.setVariable("allSupplier", productService.getAllSupplier());
+            engine.process("product/products.html", context, resp.getWriter());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
 
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        /*ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         CartDao cartsOfUser = CartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, productSupplierDataStore);
 
@@ -92,7 +94,7 @@ public class ProductController extends HttpServlet {
         // params.put("category", productCategoryDataStore.find(1));
         // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         // context.setVariables(params);
-        engine.process("product/index.html", context, resp.getWriter());
+        engine.process("product/index.html", context, resp.getWriter());*/
     }
 
 }
