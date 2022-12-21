@@ -1,5 +1,6 @@
 package com.codecool.shop.service;
 
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
@@ -7,6 +8,7 @@ import com.codecool.shop.model.Supplier;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProductService{
     private final ProductDao productDao;
@@ -28,14 +30,14 @@ public class ProductService{
     public List<Product> getProductsForCategory(int categoryId){
         return productDao.getAll().stream()
                 .filter(product -> product.getProductCategory().getId() == categoryId)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public  List<ProductCategory> getAllCategories(){
         return productDao.getAll().stream()
                 .map(Product::getProductCategory)
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
 
     }
 
@@ -49,13 +51,13 @@ public class ProductService{
     public List<Product> getProductsForSupplier(int supplierId){
         return productDao.getAll().stream()
                 .filter(product -> product.getSupplier().getId() == supplierId)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public  List<Supplier> getAllSupplier(){
         return productDao.getAll().stream()
                 .map(Product::getSupplier)
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
     }
 }

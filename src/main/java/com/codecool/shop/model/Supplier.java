@@ -2,9 +2,11 @@ package com.codecool.shop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Supplier extends BaseModel {
     private List<Product> products;
+
 
     public Supplier(int id, String name, String description) {
         super(id, name, description);

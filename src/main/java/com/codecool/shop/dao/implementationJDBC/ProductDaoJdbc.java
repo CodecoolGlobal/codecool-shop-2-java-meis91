@@ -4,6 +4,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.service.ProductService;
 import jdk.jfr.Category;
 
 import javax.sql.DataSource;
@@ -50,6 +51,7 @@ public class ProductDaoJdbc implements ProductDao {
             List<Product> result = new ArrayList<>();
             SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
             ProductCategoryDaoJdbc productCategoryDaoJdbc = new ProductCategoryDaoJdbc(dataSource);
+            ProductService productService = new ProductService(this);
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -58,6 +60,7 @@ public class ProductDaoJdbc implements ProductDao {
                 String currency = rs.getString("default_currency");
                 int supplierId = rs.getInt("supplier_id");
                 int categoryId = rs.getInt("category_id");
+
                 Product product = new Product(id, name, price, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
                 result.add(product);
             }
