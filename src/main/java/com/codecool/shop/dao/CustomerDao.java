@@ -14,4 +14,6 @@ public interface CustomerDao {
 
     List<Customer> getAll();
 
+    Customer getRegisteredUser(String email);
+
 }

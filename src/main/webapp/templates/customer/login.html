@@ -40,7 +40,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/static">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
@@ -66,13 +66,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/registration/">Registration</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/login/">Login</a>
+                </li>
             </ul>
         </div>
     </nav>
 </div>
 
 <div class="container">
-    <form class="register-form" action="/registration/" method="post">
+    <form class="login" action="/login/" method="post">
 
         <label for="email">E-Mail: </label>
         <input type="text" name="email" id="email">
@@ -81,7 +84,7 @@
         <input type="text" name="password" id="password">
 
 
-        <button id="registration-button" type="submit">Create Account</button>
+        <button id="login-button" type="submit">Login</button>
 
 
     </form>

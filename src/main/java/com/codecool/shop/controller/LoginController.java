@@ -1,17 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.CustomerDao;
 import com.codecool.shop.dao.implementationJDBC.CustomerDaoJdbc;
 import com.codecool.shop.dao.implementationJDBC.DatabaseManager;
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
-import com.codecool.shop.model.Address;
-import com.codecool.shop.model.AddressType;
 import com.codecool.shop.model.Customer;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.service.CartService;
-import com.codecool.shop.service.CustomerService;
 import com.codecool.shop.util.PasswordSecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +21,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/registration/"})
-public class RegistrationController extends HttpServlet {
+@WebServlet(urlPatterns = {"/login/"})
+public class LoginController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @Override
@@ -37,7 +30,7 @@ public class RegistrationController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        engine.process("customer/registration.html", context, resp.getWriter());
+        engine.process("customer/login.html", context, resp.getWriter());
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,33 +39,38 @@ public class RegistrationController extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        try {
-            byte[] salt = PasswordSecurity.getSalt();
-            String hashedPassword = PasswordSecurity.getSecurePassword(password, salt);
-            customer = new Customer(email, hashedPassword, salt);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        logger.info("Received new User Data: {}", customer.getHashedPassword());
+//        try {
+//            String hashedPassword = PasswordSecurity.hashPassword(password);
+//            customer = new Customer(email, hashedPassword, null, null, null);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        logger.info("Received new User Data: {}", customer);
         DatabaseManager databaseManager = new DatabaseManager();
 
         try {
             DataSource dataSource = databaseManager.connect();
             CustomerDao customerDao = new CustomerDaoJdbc(dataSource);
-            customerDao.add(customer);
-            resp.sendRedirect(req.getContextPath() + "/login/");
-        } catch (RuntimeException r) {
-            logger.error("User email already exists");
-            doGet(req, resp);
+            customer = customerDao.getRegisteredUser(email);
         } catch (SQLException e) {
-            logger.error("Unknown error");
             throw new RuntimeException(e);
         }
 
+        String hashedInputPassword;
+        String hashedUserPassword = customer.getHashedPassword();
+        byte[] salt = customer.getSalt();
+        hashedInputPassword = PasswordSecurity.getSecurePassword(password, salt);
 
-//        ProductController productController = new ProductController();
-//        productController.doGet(req, resp);
+        if (hashedInputPassword.equals(hashedUserPassword)) {
+            System.out.println("passwords are equal");
+        }
+        else {
+            System.out.println("Wrong password");
+        }
+        logger.info("I have got passwords! {} {}", hashedInputPassword, hashedUserPassword);
+        ProductController productController = new ProductController();
+        productController.doGet(req, resp);
 
     }
 }

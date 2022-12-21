@@ -65,15 +65,13 @@ public class DatabaseManager {
 
         public DataSource connect() throws SQLException {
             PGSimpleDataSource dataSource = new PGSimpleDataSource();
-            String dbName = DBConnectionData.DB_NAME.getEnvVariable();
-            String user = DBConnectionData.USER_NAME.getEnvVariable();
-            String password = DBConnectionData.PASSWORD.getEnvVariable();
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("USER_NAME");
+            String password = System.getenv("PASSWORD");
 
             dataSource.setDatabaseName(dbName);
             dataSource.setUser(user);
             dataSource.setPassword(password);
-
-            logger.info("Got following connection info: {}, {}, {}", dbName, user, password);
 
             System.out.println("Trying to connect");
             dataSource.getConnection().close();
