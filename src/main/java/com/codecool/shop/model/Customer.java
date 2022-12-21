@@ -4,6 +4,8 @@ public class Customer {
     private int id;
     private final String eMail;
     private String hashedPassword;
+
+    private byte[] salt;
     private String phoneNumber;
     private Cart cart;
     private Address shippingAddress;
@@ -15,6 +17,12 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
+    }
+
+    public Customer(String eMail, String hashedPassword, byte[] salt) {
+        this.eMail = eMail;
+        this.hashedPassword = hashedPassword;
+        this.salt = salt;
     }
 
     public int getId() {
@@ -45,6 +53,14 @@ public class Customer {
 
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public Cart getCart() {

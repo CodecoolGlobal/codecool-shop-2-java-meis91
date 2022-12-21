@@ -73,8 +73,6 @@ public class DatabaseManager {
             dataSource.setUser(user);
             dataSource.setPassword(password);
 
-            logger.info("Got following connection info: {}, {}, {}", dbName, user, password);
-
             System.out.println("Trying to connect");
             dataSource.getConnection().close();
             System.out.println("Connection ok.");

@@ -41,4 +41,8 @@ public class CustomerDaoMem implements CustomerDao {
     public List<Customer> getAll() {
         return data;
     }
+
+    public Customer getRegisteredUser(String email) {
+        return null;
+    }
 }

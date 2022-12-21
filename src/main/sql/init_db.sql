@@ -48,8 +48,10 @@ DROP TABLE IF EXISTS public.customer;
 CREATE TABLE public.customer
 (
     id                  serial NOT NULL PRIMARY KEY,
-    email               text   NOT NULL,
-    password            text   NOT NULL,
+    email               text   NOT NULL UNIQUE,
+    password            text,
+    salt                bytea,
+    phone_number        text,
     cart_id             int,
     billing_address_id  int,
     shipping_address_id int
