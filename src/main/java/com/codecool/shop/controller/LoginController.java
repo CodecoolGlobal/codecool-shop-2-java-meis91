@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -63,6 +64,9 @@ public class LoginController extends HttpServlet {
         hashedInputPassword = PasswordSecurity.getSecurePassword(password, salt);
 
         if (hashedInputPassword.equals(hashedUserPassword)) {
+            HttpSession session = req.getSession();
+            session.setAttribute("email", customer.getEMail());
+            resp.sendRedirect(req.getContextPath() + "/");
             System.out.println("passwords are equal");
         }
         else {

@@ -30,21 +30,17 @@
 </head>
 
 <body>
-
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
-</div>
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/static">Codecool Shop</a>
+        <a class="navbar-brand" href="/">Codecool Shop</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/static">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -53,7 +49,7 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Supplier
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -63,14 +59,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/shopping-cart/">Shopping Cart</a>
                 </li>
+
+            </ul>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/registration/">Registration</a>
+                    <a th:if="${session.isEmpty()}" class="nav-link" href="/registration/">Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login/">Login</a>
+                    <a th:if="${session.isEmpty()}" class="nav-link" href="/login/">Login</a>
+                </li>
+                <li class="nav-text active">
+                    <a th:if="${session.containsKey('email')}" class="nav-link" th:text="${session.email}"></a>
+                </li>
+                <li class="nav-item">
+                    <a th:unless="${session.isEmpty()}" class="nav-link" th:text="Logout" href="/logout/"></a>
                 </li>
             </ul>
         </div>
+
     </nav>
 </div>
 
