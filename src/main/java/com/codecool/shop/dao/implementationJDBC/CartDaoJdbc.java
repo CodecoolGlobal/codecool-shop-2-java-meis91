@@ -9,10 +9,8 @@ import com.codecool.shop.model.Supplier;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class CartDaoJdbc extends DaoJdbc implements CartDao {
-    public CartDaoJdbc(DataSource dataSource) {
-        super(dataSource);
-    }
+public class CartDaoJdbc implements CartDao {
+
 
     @Override
     public void add(Product product) {
