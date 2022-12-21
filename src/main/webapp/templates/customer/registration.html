@@ -83,19 +83,22 @@
     </nav>
 </div>
 
+<div>
+    <h1>Registration</h1>
+</div>
+
 <div class="container">
     <form class="register-form" action="/registration/" method="post">
 
         <label for="email">E-Mail: </label>
-        <input type="text" name="email" id="email">
-
+        <input type="text" name="email" id="email" required="required">
+        <br>
         <label for="password">Password: </label>
-        <input type="text" name="password" id="password">
-
+        <input type="text" name="password" id="password" required="required">
+        <br>
+        <br>
 
         <button id="registration-button" type="submit">Create Account</button>
-
-
     </form>
 </div>
 <div th:replace="footer.html :: copy"></div>
