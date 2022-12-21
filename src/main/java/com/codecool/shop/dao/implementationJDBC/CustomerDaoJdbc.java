@@ -12,10 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CustomerDaoJdbc implements CustomerDao {
-
+public class CustomerDaoJdbc  implements CustomerDao {
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-    private final DataSource dataSource;
+    DataSource dataSource;
 
     public CustomerDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
