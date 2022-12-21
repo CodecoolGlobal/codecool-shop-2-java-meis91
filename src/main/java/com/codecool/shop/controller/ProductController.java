@@ -43,6 +43,7 @@ public class ProductController extends HttpServlet {
             Connection connection = dataSource.getConnection();
             ProductDao productDataStore1 = new ProductDaoJdbc(dataSource);
             System.out.println(productDataStore1.getAll()); // I'm here (rethink the system)
+            //ProductService productService = new ProductService(productDataStore, productCategoryDataStore, productSupplierDataStore);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
