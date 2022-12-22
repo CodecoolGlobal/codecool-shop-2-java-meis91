@@ -31,12 +31,13 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = {"/registration/"})
 public class RegistrationController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    String errorMessage = null;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
+        context.setVariable("errorMessage", errorMessage);
         engine.process("customer/registration.html", context, resp.getWriter());
     }
     @Override
@@ -54,7 +55,6 @@ public class RegistrationController extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        logger.info("Received new User Data: {}", customer.getHashedPassword());
         DatabaseManager databaseManager = new DatabaseManager();
 
         try {
@@ -64,16 +64,12 @@ public class RegistrationController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/login/");
         } catch (RuntimeException r) {
             logger.error("User email already exists");
+            errorMessage = "E-Mail already exists - please Login or use another E-Mail address.";
             doGet(req, resp);
         } catch (SQLException e) {
             logger.error("Unknown error");
             throw new RuntimeException(e);
         }
-
-
-//        ProductController productController = new ProductController();
-//        productController.doGet(req, resp);
-
     }
 }
 
