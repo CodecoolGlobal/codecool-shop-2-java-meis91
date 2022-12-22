@@ -44,7 +44,7 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:each="category,iterStat : ${allCategories}" th:text="${category.name}" th:href="@{/(category=${category.getId()})}"></a>
+                        <a class="dropdown-item category" th:each="category,iterStat : ${allCategories}" th:attr="data-category-id=${category.getId()}" th:text="${category.name}" role="button"<!--th:href="@{/(category=${category.getId()})}"-->></a>
 
                     </div>
                 </li>
@@ -53,7 +53,7 @@
                         Supplier
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:each="supplier,iterStat : ${allSupplier}" th:text="${supplier.name}" th:href="@{/(supplier=${supplier.getId()})}"></a>
+                        <a class="dropdown-item supplier" th:each="supplier,iterStat : ${allSupplier}" th:attr="data-supllier_id=${supplier.getId()}" th:text="${supplier.name}" role="button"<!--th:href="@{/(supplier=${supplier.getId()})}"-->></a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -112,4 +112,5 @@
 </div>
 <div th:replace="footer.html :: copy"></div>
 </body>
+<script src="/static/script/products.js"></script>
 </html>

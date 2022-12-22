@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/"})
+@WebServlet(name = "ProductController", urlPatterns = {"/", "/product"}, loadOnStartup = 1)
 public class ProductController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Override
