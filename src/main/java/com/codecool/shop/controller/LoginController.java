@@ -26,10 +26,13 @@ import java.sql.SQLException;
 public class LoginController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
+    String errorMessage = null;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        context.setVariable("errorMessage", errorMessage);
 
         engine.process("customer/login.html", context, resp.getWriter());
     }
@@ -40,14 +43,6 @@ public class LoginController extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-//        try {
-//            String hashedPassword = PasswordSecurity.hashPassword(password);
-//            customer = new Customer(email, hashedPassword, null, null, null);
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        logger.info("Received new User Data: {}", customer);
         DatabaseManager databaseManager = new DatabaseManager();
 
         try {
@@ -57,25 +52,29 @@ public class LoginController extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        String hashedUserPassword = null;
+        String hashedInputPassword = null;
 
-        String hashedInputPassword;
-        String hashedUserPassword = customer.getHashedPassword();
-        byte[] salt = customer.getSalt();
-        hashedInputPassword = PasswordSecurity.getSecurePassword(password, salt);
-
-        if (hashedInputPassword.equals(hashedUserPassword)) {
-            HttpSession session = req.getSession();
-            session.setAttribute("email", customer.getEMail());
-            resp.sendRedirect(req.getContextPath() + "/");
-            System.out.println("passwords are equal");
+        try {
+            hashedUserPassword = customer.getHashedPassword();
+            byte[] salt = customer.getSalt();
+            hashedInputPassword = PasswordSecurity.getSecurePassword(password, salt);
+            if (hashedInputPassword.equals(hashedUserPassword)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("email", customer.getEMail());
+                errorMessage = null;
+                resp.sendRedirect(req.getContextPath() + "/");
+            }
+            else {
+                logger.warn("Wrong password");
+                errorMessage = "Wrong password, please try again.";
+                doGet(req, resp);
+            }
+        } catch (NullPointerException e) {
+            logger.warn("Unknown email address - user is not registered");
+            errorMessage = "Unknown email address, please try again or register.";
+            doGet(req, resp);
         }
-        else {
-            System.out.println("Wrong password");
-        }
-        logger.info("I have got passwords! {} {}", hashedInputPassword, hashedUserPassword);
-        ProductController productController = new ProductController();
-        productController.doGet(req, resp);
-
     }
 }
 
