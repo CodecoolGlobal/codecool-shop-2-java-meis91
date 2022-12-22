@@ -33,7 +33,6 @@ public class ProductController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         DatabaseManager databaseManager = new DatabaseManager();
         try {
             DataSource dataSource = databaseManager.connect();

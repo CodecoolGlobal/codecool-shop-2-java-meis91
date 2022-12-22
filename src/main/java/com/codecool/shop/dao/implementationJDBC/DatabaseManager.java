@@ -68,16 +68,12 @@ public class DatabaseManager {
             String dbName = System.getenv("DB_NAME");
             String user = System.getenv("USER_NAME");
             String password = System.getenv("PASSWORD");
-
             dataSource.setDatabaseName(dbName);
             dataSource.setUser(user);
             dataSource.setPassword(password);
-
             System.out.println("Trying to connect");
             dataSource.getConnection().close();
             System.out.println("Connection ok.");
-
             return dataSource;
         }
-
 }
