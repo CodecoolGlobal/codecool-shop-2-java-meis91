@@ -1,9 +1,10 @@
 package com.codecool.shop.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Product extends BaseModel implements Serializable {
 
     private BigDecimal defaultPrice;
     private Currency defaultCurrency;

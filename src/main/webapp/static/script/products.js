@@ -5,8 +5,9 @@ const supplierFilter = document.getElementsByClassName("dropdown-item supplier")
 for (let i = 0; i < categoryFilters.length; i++) {
     categoryFilters.item(i).addEventListener("click", evt =>{
         let categoryId = evt.target.getAttribute("data-category-id");
-        let filterTyp = "category";
-        getProducts(filterTyp, categoryId)
+        let category = "category";
+        console.log(getProducts(category, categoryId))
+
     })
 }
 
