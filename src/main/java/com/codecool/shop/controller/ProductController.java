@@ -27,21 +27,35 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ProductController", urlPatterns = {"/", "/product"}, loadOnStartup = 1)
 public class ProductController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DatabaseManager databaseManager = new DatabaseManager();
         // TODO: 29.12.22 make the filtering work with and without js - if js crashes the user can still filter
         try {
+            DatabaseManager databaseManager = new DatabaseManager();
             DataSource dataSource = databaseManager.connect();
             ProductDao productDataStore = new ProductDaoJdbc(dataSource);
             ProductService productService = new ProductService(productDataStore);
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
-            context.setVariable("allProducts", productDataStore.getAll());
+            List<Product> products = new ArrayList<>();
+            if (req.getQueryString() != null) {
+                if (req.getQueryString().contains("category")) {
+                    int categoryId = Integer.parseInt(req.getParameter("category"));
+                    products = productService.getProductsForCategory(categoryId);
+                } else if (req.getQueryString().contains("supplier")) {
+                    int supplierId = Integer.parseInt(req.getParameter("supplier"));
+                    products = productService.getProductsForSupplier(supplierId);
+                }
+            } else {
+                products = productDataStore.getAll();
+            }
+            context.setVariable("allProducts", products);
             context.setVariable("allCategories", productService.getAllCategories());
             context.setVariable("allSupplier", productService.getAllSupplier());
             engine.process("product/products.html", context, resp.getWriter());

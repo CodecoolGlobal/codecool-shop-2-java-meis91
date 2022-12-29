@@ -69,11 +69,13 @@ function setFilterName(searchType, products) {
 
 for (let i = 0; i < categoryFilters.length; i++) {
     categoryFilters.item(i).addEventListener("click", evt =>{
+        evt.preventDefault();
         filterByCategory(evt);
     })
 }
 for (let i = 0; i < supplierFilters.length; i++) {
     supplierFilters.item(i).addEventListener("click", evt =>{
+        evt.preventDefault();
         filterBySupplier(evt);
     })
 }
