@@ -28,14 +28,10 @@ import javax.sql.DataSource;
 
 @WebServlet(name = "JsonController", urlPatterns = {"/json/*"}, loadOnStartup =0)
 public class JsonController extends HttpServlet {
-    //private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        //ServletOutputStream out = resp.getOutputStream();
-        //out.println(data);
-        //
         try {
             DatabaseManager databaseManager = new DatabaseManager();
             resp.setContentType("application/json");
@@ -44,21 +40,18 @@ public class JsonController extends HttpServlet {
             DataSource dataSource = databaseManager.connect();
             ProductDao productDataStore = new ProductDaoJdbc(dataSource);
             ProductService productService = new ProductService(productDataStore);
+            List<Product> products = new ArrayList<>();
             if (req.getQueryString() != null) {
                 if (req.getQueryString().contains("category")) {
                     int categoryId = Integer.parseInt(req.getParameter("id"));
-                    List<Product> products = productService.getProductsForCategory(categoryId);
-                    products.stream().forEach(System.out::println);
-                    System.out.println(products.size());
-                    // TODO: 25.12.22 Fix the Problem with circular references, becuase Gson doesn`t likes them ;) 
-                    Type listType = new TypeToken<List<Product>>(){}.getType();
-                    System.out.println(listType);
-                    Gson gson = new Gson();
-                    //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = gson.toJson(products, listType);
-                    System.out.println(output);
-                    out.print(output);
+                    products = productService.getProductsForCategory(categoryId);
+                } else if (req.getQueryString().contains("supplier")) {
+                    int supplierId = Integer.parseInt(req.getParameter("id"));
+                    products = productService.getProductsForSupplier(supplierId);
                 }
+                Gson gson = new Gson();
+                String output = gson.toJson(products);
+                out.print(output);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
