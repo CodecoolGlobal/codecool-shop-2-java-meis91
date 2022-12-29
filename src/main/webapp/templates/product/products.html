@@ -94,8 +94,8 @@
                         <h4 class="card-title" th:text="${product.name}">Product name</h4>
                         <p class="card-text" th:text="${product.getProductCategory().name}">ProductCategory </p>
                         <p class="card-text" th:text="${product.description}">Product description... </p>
-                        <p style="display:inline"> Category: </p><a th:href="@{/(category=${product.getProductCategory().getId()})}" class="card-text" th:text="${product.getProductCategory().name}">Product Category </a><br>
-                        <p style="display:inline"> Supplier: </p><a th:href="@{/(supplier=${product.getSupplier().getId()})}" class="card-text" th:text="${product.getSupplier().getName()}">Product Supplier </a>
+                        <p style="display:inline"> Category: </p><a class="card-text category-link"th:href="@{/(category=${product.getProductCategory().getId()})}" th:attr="data-category-id=${product.getProductCategory().getId()}" th:text="${product.getProductCategory().name}">Product Category </a><br>
+                        <p style="display:inline"> Supplier: </p><a class="card-text supplier-link"th:href="@{/(supplier=${product.getSupplier().getId()})}" th:attr="data-supplier_id=${product.getSupplier().getId()}" th:text="${product.getSupplier().getName()}">Product Supplier </a>
                     </div>
                     <div class="card-body">
                         <div class="card-text">

@@ -1,26 +1,24 @@
 const categoryFilters = document.getElementsByClassName("dropdown-item category");
 const supplierFilters = document.getElementsByClassName("dropdown-item supplier");
+const categoryLinks = document.getElementsByClassName("card-text category-link");
+const supplierLinks = document.getElementsByClassName("card-text supplier-link");
 const productsContainer = document.getElementById("products");
 const containerName = document.getElementById("container-name");
+
 let filterName;
 
 
-for (let i = 0; i < categoryFilters.length; i++) {
-    categoryFilters.item(i).addEventListener("click", evt =>{
-        let categoryId = evt.target.getAttribute("data-category-id");
-        let category = "category";
-        getProducts(category, categoryId);
-    })
+function filterByCategory(evt) {
+    let categoryId = evt.target.getAttribute("data-category-id");
+    let category = "category";
+    getProducts(category, categoryId);
 }
 
-for (let i = 0; i < supplierFilters.length; i++) {
-    supplierFilters.item(i).addEventListener("click", evt =>{
-        let categoryId = evt.target.getAttribute("data-supplier_id");
-        let category = "supplier";
-        getProducts(category, categoryId);
-    })
+function filterBySupplier(evt) {
+    let categoryId = evt.target.getAttribute("data-supplier_id");
+    let category = "supplier";
+    getProducts(category, categoryId);
 }
-
 
 async function getProducts(searchType, searchId){
     let html = ""
@@ -39,8 +37,10 @@ async function getProducts(searchType, searchId){
                         <h4 class="card-title">${product.name}</h4>
                         <p class="card-text">${product.productCategory.name} </p>
                         <p class="card-text">${product.description}</p>
-                        <p style="display:inline"> Category: </p><a th:href="#" class="card-text" role="button">${product.productCategory.name}</a><br>
-                        <p style="display:inline"> Supplier: </p><a th:href="#" class="card-text" role="button">${product.supplier.name} </a>
+                        <p style="display:inline"> Category: </p>
+                            <a class="card-text category-link" role="button" href="/category=${product.productCategory.id}">${product.productCategory.name}</a><br>
+                        <p style="display:inline"> Supplier: </p>
+                            <a class="card-text supplier-link" role="button" href="/category=${product.productCategory.id}">${product.supplier.name} </a>
                     </div>
                     <div class="card-body">
                         <div class="card-text">
@@ -64,4 +64,28 @@ function setFilterName(searchType, products) {
         filterName = products[0].supplier.name;
     }
     containerName.innerText = filterName;
+}
+
+
+for (let i = 0; i < categoryFilters.length; i++) {
+    categoryFilters.item(i).addEventListener("click", evt =>{
+        filterByCategory(evt);
+    })
+}
+for (let i = 0; i < supplierFilters.length; i++) {
+    supplierFilters.item(i).addEventListener("click", evt =>{
+        filterBySupplier(evt);
+    })
+}
+for (let i = 0; i < categoryLinks.length; i++){
+    categoryLinks.item(i).addEventListener("click", evt =>{
+        evt.preventDefault();
+        filterByCategory(evt);
+    })
+}
+for (let i = 0; i < supplierLinks.length; i++){
+    supplierLinks.item(i).addEventListener("click", evt =>{
+        evt.preventDefault();
+        filterBySupplier(evt);
+    })
 }
