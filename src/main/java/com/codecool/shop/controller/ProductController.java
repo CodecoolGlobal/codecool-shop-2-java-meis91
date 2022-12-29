@@ -34,6 +34,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DatabaseManager databaseManager = new DatabaseManager();
+        // TODO: 29.12.22 make the filtering work with and without js - if js crashes the user can still filter
         try {
             DataSource dataSource = databaseManager.connect();
             ProductDao productDataStore = new ProductDaoJdbc(dataSource);
@@ -41,7 +42,6 @@ public class ProductController extends HttpServlet {
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
             context.setVariable("allProducts", productDataStore.getAll());
-
             context.setVariable("allCategories", productService.getAllCategories());
             context.setVariable("allSupplier", productService.getAllSupplier());
             engine.process("product/products.html", context, resp.getWriter());
