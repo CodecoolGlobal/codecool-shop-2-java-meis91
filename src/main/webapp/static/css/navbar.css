@@ -1,0 +1,19 @@
+/*
+Todo: Sass override to bootstrap
+*/
+.navbar{
+    background-color: #333333;
+    color: #aaaaaa;
+    padding: 50px;
+}
+.shopping-cart{
+    font-size: 50px;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.cart-amount{
+    font-size: 16px;
+    background-color: red;
+
+}
