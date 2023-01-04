@@ -31,7 +31,32 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public Product find(int id) {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = """
+                    SELECT *
+                    FROM product 
+                    WHERE id = ?
+                    """;
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
+            ProductCategoryDaoJdbc productCategoryDaoJdbc = new ProductCategoryDaoJdbc(dataSource);
+            if (!rs.next()) {
+                return null;
+            }
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            BigDecimal price = rs.getBigDecimal("default_price");
+            String currency = rs.getString("default_currency");
+            int supplierId = rs.getInt("supplier_id");
+            int categoryId = rs.getInt("category_id");
+            Product product = new Product(id, name, price, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
+            return product;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error while finding supplier", e);
+        }
     }
 
     @Override

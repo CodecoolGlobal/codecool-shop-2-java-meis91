@@ -11,7 +11,7 @@
 }
 .thumbnail img
 {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 .item.list-group-item
 {
@@ -73,5 +73,7 @@
     cursor: pointer;
 }
 
-
+.cart{
+    padding: 15px;
+}
 

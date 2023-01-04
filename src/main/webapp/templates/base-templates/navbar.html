@@ -45,7 +45,7 @@
         </div>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-            <ul class="navbar-nav">
+            <ul class="nav navbar-nav navbar-right user">
                 <li class="nav-item">
                     <a th:if="${session.isEmpty()}" class="nav-link" href="/registration/">Registration</a>
                 </li>
@@ -60,10 +60,82 @@
                 </li>
             </ul>
         </div>
-        <div class="shopping-cart">
-            <i class="bi bi-cart2"></i>
-            <div class="cart-amount">0</div>
+        <div>
+            <ul class="nav navbar-nav navbar-right cart">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="bi bi-cart2 cart-icon"></i>
+                <ul class="dropdown-menu dropdown-cart" role="menu">
+                    <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_1.jpg" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>price: 27$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-danger  fa fa-close"></button>
+                    </span>
+                </span>
+                    </li>
+                    <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_2.jpg" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>price: 3$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-danger  fa fa-close"></button>
+                    </span>
+                </span>
+                    </li>
+                    <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_3.jpeg" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>price: 12$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-danger  fa fa-close"></button>
+                    </span>
+                </span>
+                    </li>
+                    <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_4.jpg" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>price: 7$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-danger  fa fa-close"></button>
+                    </span>
+                </span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a class="text-center" href="#">View Cart</a></li>
+                </ul>
+            </li>
+        </ul>
         </div>
+</div>
+</nav>
+</div>
+
+<!--<div class="shopping-cart">
+    <i class="bi bi-cart2"></i>
+    <div class="cart-amount">0</div>
+</div>-->
     </nav>
 </div>
 

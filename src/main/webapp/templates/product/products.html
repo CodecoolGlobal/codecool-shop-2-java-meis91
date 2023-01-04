@@ -53,8 +53,8 @@
                         <div class="card-text">
                             <p class="lead" th:text="${product.getPrice()}">100 USD</p>
                         </div>
-                        <div class="card-text">
-                            <a class="btn btn-success" th:href="@{/(cart=${product.getId()})}">Add to cart</a>
+                        <div class="cart-btn">
+                            <a class="btn btn-success add-to-cart-btn" th:href="@{/(cart=${product.getId()})}" th:attr="data-product-id=${product.getId()}">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -65,4 +65,5 @@
 <div th:replace="'base-templates/footer.html' :: copy"></div>
 </body>
 <script src="/static/script/products.js"></script>
+<script src="/static/script/shoppingCart.js"></script>
 </html>

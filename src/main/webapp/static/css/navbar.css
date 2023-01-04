@@ -17,3 +17,7 @@ Todo: Sass override to bootstrap
     background-color: red;
 
 }
+
+.bi bi-cart2{
+    font-size: 20px;
+}

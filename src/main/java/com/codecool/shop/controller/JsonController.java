@@ -48,6 +48,9 @@ public class JsonController extends HttpServlet {
                 } else if (req.getQueryString().contains("supplier")) {
                     int supplierId = Integer.parseInt(req.getParameter("id"));
                     products = productService.getProductsForSupplier(supplierId);
+                } else {
+                    int productId = Integer.parseInt(req.getParameter("id"));
+                    products.add(productDataStore.find(productId));
                 }
                 Gson gson = new Gson();
                 String output = gson.toJson(products);
