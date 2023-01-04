@@ -1,10 +1,15 @@
 const cartBtn = document.getElementsByClassName("add-to-cart-btn" );
+const cartAmount = document.getElementsByClassName("cart-amount");
 
 function addItemToCart(evt) {
     //console.log(evt.target.parentNode)
     let productId = evt.target.getAttribute("data-product-id");
-    console.log(productId)
+
     localStorage.setItem("cart", productId);
+    let shoppingBasket = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log("basketr")
+    console.log(shoppingBasket.length);
+    cartAmount.innerText = shoppingBasket.length;
     addProductToCart(productId)
 }
 
@@ -15,7 +20,8 @@ async function addProductToCart(productId){
     let response = await fetch("json/" + "?" + params.toString());
     let result = await response.json();
     console.log(result)
-    localStorage.setItem("data", result);
+    localStorage.setItem("cart", JSON.stringify(result));
+    //
     /*for(let product of result){
         html += `
                 <div class="col col-sm-12 col-md-6 col-lg-4">

@@ -73,7 +73,35 @@
     cursor: pointer;
 }
 
-.cart{
-    padding: 15px;
+.nav{
+    right: 15px;
+    font-size: 16px;
 }
 
+.user{
+    right: 50px;
+}
+
+
+.cart{
+    position: relative;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.bi{
+    color: #575454;
+    font-size: 32px;
+}
+
+.cart-amount{
+    position: absolute;
+    top: -5px;
+    right: -3px;
+
+    font-size: 15px;
+    background-color: rgb(255, 87, 87);
+    color: black;
+    padding: 2px;
+    border-radius: 4px;
+}

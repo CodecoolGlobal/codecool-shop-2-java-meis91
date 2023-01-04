@@ -1,9 +1,12 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementationJDBC.DatabaseManager;
 import com.codecool.shop.dao.implementationJDBC.ProductDaoJdbc;
+import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,8 +52,11 @@ public class JsonController extends HttpServlet {
                     int supplierId = Integer.parseInt(req.getParameter("id"));
                     products = productService.getProductsForSupplier(supplierId);
                 } else {
+                    CartDao cartData = CartDaoMem.getInstance();
+                    CartService cartService = new CartService(cartData);
                     int productId = Integer.parseInt(req.getParameter("id"));
-                    products.add(productDataStore.find(productId));
+                    cartData.add(productDataStore.find(productId));
+                    products = cartService.getCart();
                 }
                 Gson gson = new Gson();
                 String output = gson.toJson(products);
@@ -59,6 +65,12 @@ public class JsonController extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
     }
 }

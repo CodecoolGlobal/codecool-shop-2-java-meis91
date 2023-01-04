@@ -1,0 +1,9 @@
+Cart:
+    - Where to safe items? Local Storage, DB or Mem?
+    - Cart DB structure?
+
+Dynamic Page:
+    - Is it correct to build a web-app so that it can ran with templates and dom manipulation (if js crashes or not supported)?
+
+Bootstrap:
+    - How to make that damn shopping-basket bigger!? Sass?
