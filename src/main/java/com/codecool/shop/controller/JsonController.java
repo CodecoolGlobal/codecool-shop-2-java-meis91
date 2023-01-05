@@ -52,11 +52,11 @@ public class JsonController extends HttpServlet {
                     int supplierId = Integer.parseInt(req.getParameter("id"));
                     products = productService.getProductsForSupplier(supplierId);
                 } else {
-                    CartDao cartData = CartDaoMem.getInstance();
-                    CartService cartService = new CartService(cartData);
+                    /*CartDao cartData = CartDaoMem.getInstance();
+                    CartService cartService = new CartService(cartData);*/
                     int productId = Integer.parseInt(req.getParameter("id"));
-                    cartData.add(productDataStore.find(productId));
-                    products = cartService.getCart();
+                    products.add(productDataStore.find(productId));
+                    //products = cartService.getCart();
                 }
                 Gson gson = new Gson();
                 String output = gson.toJson(products);

@@ -61,7 +61,7 @@ public class CartController extends HttpServlet {
         context.setVariable("products", cartService.getCart());
         context.setVariable("total_price", cartService.getTotalPrice());
         resp.getWriter().println("<!-- -->");
-        engine.process("product/cart.html", context, resp.getWriter());
+        engine.process("cart/shopping-cart.html", context, resp.getWriter());
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
