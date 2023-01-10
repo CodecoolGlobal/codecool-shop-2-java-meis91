@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.DependencyResolver;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.CustomerDao;
@@ -55,20 +56,15 @@ public class RegistrationController extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        DatabaseManager databaseManager = new DatabaseManager();
-
         try {
-            DataSource dataSource = databaseManager.connect();
-            CustomerDao customerDao = new CustomerDaoJdbc(dataSource);
-            customerDao.add(customer);
+            CustomerDao customerDao = DependencyResolver.MY_DEPENDENCIES.getImplementation(CustomerDao.class);
+            CustomerService customerService = new CustomerService(customerDao);
+            customerService.add(customer);
             resp.sendRedirect(req.getContextPath() + "/login/");
         } catch (RuntimeException r) {
             logger.error("User email already exists");
             errorMessage = "E-Mail already exists - please Login or use another E-Mail address.";
             doGet(req, resp);
-        } catch (SQLException e) {
-            logger.error("Unknown error");
-            throw new RuntimeException(e);
         }
     }
 }

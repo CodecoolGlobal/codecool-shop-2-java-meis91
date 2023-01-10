@@ -11,6 +11,12 @@ import java.util.List;
 
 public class CartDaoJdbc implements CartDao {
 
+    DataSource dataSource;
+
+    public CartDaoJdbc(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 
     @Override
     public void add(Product product) {

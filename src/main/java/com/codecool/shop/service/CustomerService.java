@@ -5,11 +5,15 @@ import com.codecool.shop.model.Address;
 import com.codecool.shop.model.Customer;
 
 public class CustomerService {
-    private CustomerDao customerDao;
-    Address shippingAddress;
-    Address billingAddress;
+    private final CustomerDao customerDao;
 
     public CustomerService(CustomerDao customerDao) {this.customerDao = customerDao;}
 
+    public Customer getCustomerByEMail(String eMail) {
+        return customerDao.getRegisteredUser(eMail);
+    }
 
+    public void add(Customer customer) {
+        customerDao.add(customer);
+    }
 }

@@ -6,6 +6,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +18,10 @@ public class ProductService{
     public ProductService(ProductDao productDao) {
         this.productDao = productDao;
 
+    }
+
+    public  List<Product> getAllProducts(){
+        return new ArrayList<>(productDao.getAll());
     }
 
     public Optional<ProductCategory> getProductCategory(int categoryId){
