@@ -30,39 +30,6 @@ public class DatabaseManager {
         }
 
 
-
-       /* public void savePlayer(Player player) {
-            model = new PlayerModel(player);
-            playerDao.add(model);
-        }
-
-        public void saveGameState(GameMap map, int level) {
-            gameModel = new GameState(map.toString(), Date.valueOf(LocalDate.now()), model, level);
-            gameStateDao.add(gameModel);
-        }
-
-        public void updatePlayer(Player player) {
-            model = new PlayerModel(player);
-            playerDao.update(model);
-        }
-
-        public void updateGameState(GameMap map, int level) {
-            gameModel = new GameState(map.toString(), Date.valueOf(LocalDate.now()), model, level);
-            String playerName = model.getPlayerName();
-            gameStateDao.update(gameModel, playerName);
-
-        }
-
-        public List<HashMap<String, String>> getAll() {
-            return gameStateDao.getAll();
-        }
-
-        public GameState loadGameState(int id) {
-            GameState game = gameStateDao.get(id);
-            return game;
-
-        }*/
-
         public DataSource connect() throws SQLException {
             PGSimpleDataSource dataSource = new PGSimpleDataSource();
             String dbName = System.getenv("DB_NAME");

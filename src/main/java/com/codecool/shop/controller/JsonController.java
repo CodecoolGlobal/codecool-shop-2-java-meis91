@@ -5,6 +5,8 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementationJDBC.DatabaseManager;
 import com.codecool.shop.dao.implementationJDBC.ProductDaoJdbc;
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.CartItem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.ProductService;
@@ -29,7 +31,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-@WebServlet(name = "JsonController", urlPatterns = {"/json/*"}, loadOnStartup =0)
+@WebServlet(name = "JsonController", urlPatterns = {"/json/*", "shopping-cart/json/*"}, loadOnStartup =0)
 public class JsonController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
@@ -37,6 +39,7 @@ public class JsonController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             DatabaseManager databaseManager = new DatabaseManager();
+            Gson gson = new Gson();
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             PrintWriter out = resp.getWriter();
@@ -51,6 +54,15 @@ public class JsonController extends HttpServlet {
                 } else if (req.getQueryString().contains("supplier")) {
                     int supplierId = Integer.parseInt(req.getParameter("id"));
                     products = productService.getProductsForSupplier(supplierId);
+                } else if (req.getQueryString().contains("cart")) {
+                    Type newsListType = new TypeToken<ArrayList<CartItem>>(){}.getType();
+                    List<CartItem> cartItems = gson.fromJson( req.getParameter("cart"), newsListType);
+                    Cart cart = new Cart(cartItems);
+                    for (CartItem cartItem : cartItems) {
+                        cartItem.getId();
+                        products.add(productDataStore.find(cartItem.getId()));
+                    }
+
                 } else {
                     /*CartDao cartData = CartDaoMem.getInstance();
                     CartService cartService = new CartService(cartData);*/
@@ -58,7 +70,7 @@ public class JsonController extends HttpServlet {
                     products.add(productDataStore.find(productId));
                     //products = cartService.getCart();
                 }
-                Gson gson = new Gson();
+
                 String output = gson.toJson(products);
                 out.print(output);
             }

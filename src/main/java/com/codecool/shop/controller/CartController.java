@@ -23,7 +23,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/shopping-cart/"})
 public class CartController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cartData = CartDaoMem.getInstance();

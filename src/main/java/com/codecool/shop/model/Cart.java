@@ -7,12 +7,11 @@ import java.util.Map;
 
 public class Cart {
 
-
     private Customer customer;
-    private Map<Product, Integer> shoppingCart = new HashMap<>();
+    private List<CartItem> shoppingCart;
 
-    public Cart() {
-
+    public Cart(List<CartItem> shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     public Customer getCustomer() {
@@ -23,16 +22,11 @@ public class Cart {
         this.customer = customer;
     }
 
-    public void addProductToCart(Product product){
-        int amount = 1;
-        if(shoppingCart.containsKey(product)){
-            amount = shoppingCart.get(product) + 1;
-            shoppingCart.put(product, amount);
-        }
-        shoppingCart.put(product, amount);
+    public List<CartItem> getShoppingCart() {
+        return shoppingCart;
     }
 
-    public Map<Product, Integer> getShoppingCart() {
-        return shoppingCart;
+    public void setShoppingCart(List<CartItem> shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }

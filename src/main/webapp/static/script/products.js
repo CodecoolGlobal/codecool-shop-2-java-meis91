@@ -4,11 +4,8 @@ const categoryLinks = document.getElementsByClassName("card-text category-link")
 const supplierLinks = document.getElementsByClassName("card-text supplier-link");
 const productsContainer = document.getElementById("products");
 const containerName = document.getElementById("container-name");
-
+const basket = JSON.parse(localStorage.getItem("cart")) || [];
 let filterName;
-
-
-
 
 function filterByCategory(evt) {
     let categoryId = evt.target.getAttribute("data-category-id");
@@ -20,6 +17,10 @@ function filterBySupplier(evt) {
     let categoryId = evt.target.getAttribute("data-supplier_id");
     let category = "supplier";
     getProducts(category, categoryId);
+}
+
+async function setCart(){
+
 }
 
 async function getProducts(searchType, searchId){
