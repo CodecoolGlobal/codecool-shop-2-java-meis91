@@ -165,12 +165,20 @@
 
                                         <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                             <tr>
-                                                <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
+                                                <td th:if="${customer.getShippingAddress().getCountry() != ''}" align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                     <p style="font-weight: 800;">Delivery Address</p>
-                                                    <p th:text="${customer.getUserName()}">Billy Vanilly</p>
+                                                    <p th:text="${customer.getShippingAddress().getName()}">Billy Vanilly</p>
                                                     <p th:text="${customer.getShippingAddress().getCountry()}">675 Massachusetts Avenue</p>
                                                     <p th:text="${customer.getShippingAddress().getAddress()}">11th Floor</p>
                                                     <p th:text="${customer.getShippingAddress().getZipcode()}">Cambridge, MA 02139</p>
+
+                                                </td>
+                                                <td th:unless="${customer.getShippingAddress().getCountry() != ''}" align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
+                                                    <p style="font-weight: 800;">Delivery Address</p>
+                                                    <p th:text="${customer.getBillingAddress().getName()}">Billy Vanilly</p>
+                                                    <p th:text="${customer.getBillingAddress().getCountry()}">675 Massachusetts Avenue</p>
+                                                    <p th:text="${customer.getBillingAddress().getAddress()}">11th Floor</p>
+                                                    <p th:text="${customer.getBillingAddress().getZipcode()}">Cambridge, MA 02139</p>
 
                                                 </td>
                                             </tr>

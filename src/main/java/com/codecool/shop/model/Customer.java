@@ -11,13 +11,13 @@ public class Customer {
     private Address shippingAddress;
     private Address billingAddress;
 
-    public Customer(String eMail, String hashedPassword, String phoneNumber, Address billingAddress, Address shippingAddress) {
+    public Customer(String eMail, String phoneNumber, Address billingAddress, Address shippingAddress) {
         this.eMail = eMail;
-        this.hashedPassword = hashedPassword;
         this.phoneNumber = phoneNumber;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
     }
+
 
     public Customer(String eMail, String hashedPassword, byte[] salt) {
         this.eMail = eMail;

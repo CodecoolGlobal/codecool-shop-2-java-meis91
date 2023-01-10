@@ -35,4 +35,8 @@ public class CartService {
     }
 
     public void setCustomer(Customer customer) {}
+
+    public void removeAllItems() {
+        cartDao.removeAll();
+    }
 }

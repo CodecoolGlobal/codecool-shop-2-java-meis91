@@ -32,11 +32,15 @@ public class ConfirmationController extends HttpServlet {
             context.setVariable("tax", cartService.getTax());
             context.setVariable("taxedTotalPrice", cartService.getTaxedTotalPrice());
 
-            if (Objects.equals(cartService.getCustomer().getShippingAddress().getAddress(), "") || cartService.getCart().isEmpty()) {
+            if (Objects.equals(cartService.getCustomer().getShippingAddress().getAddress(), "")
+                    && Objects.equals(cartService.getCustomer().getBillingAddress().getAddress(), "")
+                    || cartService.getCart().isEmpty()) {
                 logger.info("No Address / Cart Items");
                 throw new NullPointerException("No Address / Cart Items");
             }
             engine.process("product/confirmation.html", context, resp.getWriter());
+            //TODO Kathi: save order into the Database
+            cartService.removeAllItems();
         } catch (NullPointerException | IOException e) {
             context.setVariable("error", e.getMessage());
             engine.process("product/error.html", context, resp.getWriter());

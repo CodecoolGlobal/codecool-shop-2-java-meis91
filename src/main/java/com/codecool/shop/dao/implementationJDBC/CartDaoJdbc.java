@@ -7,6 +7,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartDaoJdbc implements CartDao {
@@ -30,7 +31,10 @@ public class CartDaoJdbc implements CartDao {
 
     @Override
     public void remove(int id) {
+    }
 
+    @Override
+    public void removeAll() {
     }
 
     @Override
