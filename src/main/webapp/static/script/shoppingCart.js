@@ -4,11 +4,19 @@ const cartBtn = document.getElementsByClassName("bi bi-cart4");
 const plusBtn = document.getElementsByClassName("btn btn-success btn-number");
 const inputAmount = document.getElementsByClassName("form-control input-number");
 const minusBtn = document.getElementsByClassName("btn btn-danger btn-number");
-const total = document.getElementsByClassName("total")
+const total = document.getElementById("total-sum")
+
+
+
+/*checkoutListener();*/
+
+let totalSum = 0;
+
 
 let calculation = () =>{
     return basket.map((x) => x.amount).reduce((x, y) => x + y, 0);
 }
+
 
 
 async function getCart(){
@@ -19,7 +27,7 @@ async function getCart(){
     params.set("cart", JSON.stringify(shoppingCart))
     let response = await fetch("json/" + "?" + params.toString());
     let result = await response.json();
-    let totalSum = 0;
+
     for(let product of result){
         let amount = 0;
         for(let item of shoppingCart){
@@ -75,18 +83,11 @@ async function getCart(){
     }
     productsContainer.innerHTML = html;
 
-    await total.innerHTML = ` <div class="card-text">
-                            <p >${total}</p>
-                            <!--<div class="pay-now-btn" id = "checkout-or-pay" >
-                            <a class="btn btn-success" id="checkoutBtn" >Confirm Order</a>
-                        </div>-->
-                        </div>    
-                    `
-
 
     console.log(total)
     await setEventsForCardConfig()
-
+    await setTotalPrice()
+    await checkoutListener()
 }
 
 
@@ -103,6 +104,7 @@ function decrease(evt){
     getCart()
 }
 
+
 function increase(evt){
     let shoppingCart = JSON.parse(localStorage.getItem("cart")) || [];
     let productId = evt.target.getAttribute("data-type");
@@ -112,8 +114,25 @@ function increase(evt){
     getCart()
 }
 
-
-
+function setTotalPrice(){
+   /* const totalPriceDiv = document.createElement("div")
+    const pricePara = document.createElement("p")
+    pricePara.innerHTML = totalSum
+    totalPriceDiv.classList.add("card-text")
+    totalPriceDiv.appendChild(pricePara)
+    total.appendChild(totalPriceDiv)*/
+    let totalHtml =  `
+            <div class="total card-text">
+                <p><h3>Total Price: ${totalSum}</h3></p>
+                <div class="pay-now-btn" id = "checkout-or-pay" >
+                <a class="btn btn-success" id="checkoutBtn" >Confirm Order</a>
+            </div>
+            </div>
+        `
+    total.innerHTML = totalHtml;
+    /*let checkoutScript = "<script src=\"/script/checkOut.js\"></script>"
+    document.appendChild()*/
+}
 
 
 function setEventsForCardConfig(){
@@ -129,7 +148,31 @@ function setEventsForCardConfig(){
         } )
     }
 }
+
 cartBtn[0].addEventListener("click",
     evt => {
-        getCart()
+       getCart()
     })
+
+function checkoutListener() {
+    let checkOutBtn = document.getElementById("checkoutBtn");
+    const modal = document.getElementById("checkoutModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    checkOutBtn.addEventListener("click", function () {
+        modal.style.display = "block";
+    })
+
+
+// When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+// When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
