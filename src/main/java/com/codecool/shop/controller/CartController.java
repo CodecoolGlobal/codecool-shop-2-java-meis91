@@ -82,9 +82,9 @@ public class CartController extends HttpServlet {
         String shippingZipCode = req.getParameter("modal-zipcode-shipping");
         String shippingAdd = req.getParameter("modal-address-shipping");
 
-        billingAddress = new Address(billingCountry, billingCity, billingZipCode, billingAdd, AddressType.BILLING);
-        shippingAddress = new Address(shippingCountry, shippingCity, shippingZipCode, shippingAdd, AddressType.SHIPPING);
-        customer = new Customer(name, email, phoneNumber, billingAddress, shippingAddress);
+        billingAddress = new Address(name, billingCountry, billingCity, billingZipCode, billingAdd, AddressType.BILLING);
+        shippingAddress = new Address(name, shippingCountry, shippingCity, shippingZipCode, shippingAdd, AddressType.SHIPPING);
+        customer = new Customer(email, phoneNumber, billingAddress, shippingAddress);
         PaymentController paymentController = new PaymentController();
         paymentController.doGet(req, resp);
 

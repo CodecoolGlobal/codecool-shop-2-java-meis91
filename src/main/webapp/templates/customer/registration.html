@@ -39,23 +39,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categories
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:each="category,iterStat : ${allCategories}" th:text="${category.name}" th:href="@{/(category=${category.getId()})}"></a>
-
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Supplier
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:each="supplier,iterStat : ${allSupplier}" th:text="${supplier.name}" th:href="@{/(supplier=${supplier.getId()})}"></a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/shopping-cart/">Shopping Cart</a>
                 </li>
@@ -64,7 +47,7 @@
         </div>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-            <ul class="navbar-nav">
+            <ul class="nav navbar-nav navbar-right user">
                 <li class="nav-item active">
                     <a th:if="${session.isEmpty()}" class="nav-link" href="/registration/">Registration</a>
                 </li>

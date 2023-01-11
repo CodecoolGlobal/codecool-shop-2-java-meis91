@@ -3,18 +3,25 @@ package com.codecool.shop.model;
 public class Address {
 
     private int id;
+
+    private String name;
     private String country;
     private String city;
     private String zipcode;
     private String address;
     private AddressType addressType;
 
-    public Address(String country, String city, String zipcode, String address, AddressType addressType) {
+    public Address(String name, String country, String city, String zipcode, String address, AddressType addressType) {
+        this.name = name;
         this.country = country;
         this.city = city;
         this.zipcode = zipcode;
         this.address = address;
         this.addressType = addressType;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getCountry() {

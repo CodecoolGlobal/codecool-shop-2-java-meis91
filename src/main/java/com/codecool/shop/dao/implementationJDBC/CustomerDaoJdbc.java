@@ -58,11 +58,12 @@ public class CustomerDaoJdbc  implements CustomerDao {
             }
 
             String email = rs.getString(2);
-            String password = rs.getString(3);
+            String password = rs.getString(3); // TODO do we need the password here? I removed it from the constructor to make Order confirmation work (Kathi, 10.01.23)
+            String phoneNumber = "123";
             int cartId = rs.getInt(4);
             int billingAddressId = rs.getInt(5);
             int shippingAddressId = rs.getInt(5);
-            Customer customer = new Customer(email, password, null, null, null);
+            Customer customer = new Customer(email, phoneNumber, null, null);
             return customer;
         } catch (SQLException e) {
             logger.error("Could not load customer data");

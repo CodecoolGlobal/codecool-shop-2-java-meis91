@@ -1,10 +1,12 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.DependencyResolver;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CustomerDao;
 import com.codecool.shop.dao.implementationJDBC.CustomerDaoJdbc;
 import com.codecool.shop.dao.implementationJDBC.DatabaseManager;
 import com.codecool.shop.model.Customer;
+import com.codecool.shop.service.CustomerService;
 import com.codecool.shop.util.PasswordSecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,6 @@ public class LoginController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("errorMessage", errorMessage);
-
         engine.process("customer/login.html", context, resp.getWriter());
     }
     @Override
@@ -43,17 +44,13 @@ public class LoginController extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        DatabaseManager databaseManager = new DatabaseManager();
 
-        try {
-            DataSource dataSource = databaseManager.connect();
-            CustomerDao customerDao = new CustomerDaoJdbc(dataSource);
-            customer = customerDao.getRegisteredUser(email);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        String hashedUserPassword = null;
-        String hashedInputPassword = null;
+        CustomerDao customerDao = DependencyResolver.MY_DEPENDENCIES.getImplementation(CustomerDao.class);
+        CustomerService customerService = new CustomerService(customerDao);
+        customer = customerService.getCustomerByEMail(email);
+
+        String hashedUserPassword;
+        String hashedInputPassword;
 
         try {
             hashedUserPassword = customer.getHashedPassword();

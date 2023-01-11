@@ -33,26 +33,34 @@ public class PaymentController extends HttpServlet {
         CustomerDao customerData = CustomerDaoMem.getInstance();
         CustomerService customerService = new CustomerService(customerData);
 
+        Address billingAddress = new Address(
+                req.getParameter("modal-name"),
+                req.getParameter("modal-country-billing"),
+                req.getParameter("modal-city-billing"),
+                req.getParameter("modal-zipcode-billing"),
+                req.getParameter("modal-address-billing"),
+                AddressType.BILLING
+        );
+
+        Address shippingAddress = null;
+        if(req.getParameter("modal-country-shipping") != null) {
+            shippingAddress = new Address(
+                    req.getParameter("modal-name"),
+                    req.getParameter("modal-country-shipping"),
+                    req.getParameter("modal-city-shipping"),
+                    req.getParameter("modal-zipcode-shipping"),
+                    req.getParameter("modal-address-shipping"),
+                    AddressType.SHIPPING
+                    );
+        }
+
         Customer currentCustomer = new Customer(
                 req.getParameter("modal-email"),
-                null,
                 req.getParameter("modal-phone-number"),
-                new Address(
-                        req.getParameter("modal-country-billing"),
-                        req.getParameter("modal-city-billing"),
-                        req.getParameter("modal-zipcode-billing"),
-                        req.getParameter("modal-address-billing"),
-                        AddressType.BILLING
-                ),
-                new Address(
-                        req.getParameter("modal-country-shipping"),
-                        req.getParameter("modal-city-shipping"),
-                        req.getParameter("modal-zipcode-shipping"),
-                        req.getParameter("modal-address-shipping"),
-                        AddressType.SHIPPING
-                )
+                billingAddress,
+                shippingAddress
         );
-        logger.info("Received customer data for: {}, {}", currentCustomer.getId(), currentCustomer.getEMail());
+        logger.info("Received customer address data for: Billing {}, Shipping {}", currentCustomer.getBillingAddress().getCity(), currentCustomer.getShippingAddress().getCity());
         customerData.add(currentCustomer);
         cartData.setCustomer(currentCustomer);
 

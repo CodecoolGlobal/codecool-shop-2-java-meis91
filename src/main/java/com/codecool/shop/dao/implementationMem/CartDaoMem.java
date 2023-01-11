@@ -45,6 +45,11 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
+    public void removeAll() {
+        data = new ArrayList<>();
+    }
+
+    @Override
     public List<Product> getAll() {
         return data;
     }
