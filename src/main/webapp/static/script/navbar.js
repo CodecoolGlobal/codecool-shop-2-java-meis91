@@ -1,10 +1,10 @@
 const addToCartBtn = document.getElementsByClassName("add-to-cart-btn" );
 const cartAmount = document.getElementsByClassName("cart-amount");
 
-const shoppingBasket = JSON.parse(localStorage.getItem("cart")) || [];
 
 
 function addProductToLocalStorage(evt) {
+    let shoppingBasket = JSON.parse(localStorage.getItem("cart")) || [];
     let productId = evt.target.getAttribute("data-product-id");
     let product = {id: productId,amount: 1}
     let search = shoppingBasket.find((product) => product.id === productId);
@@ -14,7 +14,7 @@ function addProductToLocalStorage(evt) {
         search.amount += 1;
     }
     localStorage.setItem("cart", JSON.stringify(shoppingBasket));
-   /* cartAmount.innerHTML = calculation();*/
+    /*cartAmount.innerText = shoppingBasket.map((x) => x.amount).reduce((x, y) => x + y, 0);*/
 }
 
 /*let calculation = () =>{

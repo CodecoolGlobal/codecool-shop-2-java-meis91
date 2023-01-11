@@ -1,9 +1,10 @@
-const shoppingCart = JSON.parse(localStorage.getItem("cart")) || [];
+const title = document.getElementById("container-name")
 const cartContainer = document.getElementById("products");
 const cartBtn = document.getElementsByClassName("bi bi-cart4");
 const plusBtn = document.getElementsByClassName("btn btn-success btn-number");
 const inputAmount = document.getElementsByClassName("form-control input-number");
 const minusBtn = document.getElementsByClassName("btn btn-danger btn-number");
+const total = document.getElementsByClassName("total")
 
 let calculation = () =>{
     return basket.map((x) => x.amount).reduce((x, y) => x + y, 0);
@@ -11,12 +12,14 @@ let calculation = () =>{
 
 
 async function getCart(){
+    title.innerHTML = "Your Cart"
+    let shoppingCart = JSON.parse(localStorage.getItem("cart")) || [];
     let html = ""
     let params = new URLSearchParams();
     params.set("cart", JSON.stringify(shoppingCart))
-
     let response = await fetch("json/" + "?" + params.toString());
     let result = await response.json();
+    let totalSum = 0;
     for(let product of result){
         let amount = 0;
         for(let item of shoppingCart){
@@ -25,6 +28,7 @@ async function getCart(){
             }
         }
         let sum = amount * product.defaultPrice;
+        totalSum += sum;
         //let amount = shoppingCart.find((x) => x.id === product.id)
         html += `
                 <div class="col col-sm-12 col-md-6 col-lg-4">
@@ -66,15 +70,28 @@ async function getCart(){
                     </div>
                 </div>
             </div>
+            
         `
     }
     productsContainer.innerHTML = html;
-    setEventsForCardConfig()
+
+    await total.innerHTML = ` <div class="card-text">
+                            <p >${total}</p>
+                            <!--<div class="pay-now-btn" id = "checkout-or-pay" >
+                            <a class="btn btn-success" id="checkoutBtn" >Confirm Order</a>
+                        </div>-->
+                        </div>    
+                    `
+
+
+    console.log(total)
+    await setEventsForCardConfig()
 
 }
 
 
 function decrease(evt){
+    let shoppingCart = JSON.parse(localStorage.getItem("cart")) || [];
     let productId = evt.target.getAttribute("data-type");
     let search = shoppingCart.find((product) => product.id === productId);
     search.amount -= 1;
@@ -87,6 +104,7 @@ function decrease(evt){
 }
 
 function increase(evt){
+    let shoppingCart = JSON.parse(localStorage.getItem("cart")) || [];
     let productId = evt.target.getAttribute("data-type");
     let search = shoppingCart.find((product) => product.id === productId);
     search.amount += 1;
@@ -94,34 +112,12 @@ function increase(evt){
     getCart()
 }
 
-cartBtn[0].addEventListener("click",
-    evt => {
-        getCart()
-    })
 
 
-function updateAmount(productId, newAmount){
-    let divToUpdate = document.getElementById(productId);
-    console.log(divToUpdate)
-    divToUpdate.innerHTML = `
-                            </p><div class="input-group">
-                              <span class="input-group-btn">
-                                  <button type="button" class="btn btn-danger btn-number"  data-type="${productId}" data-field="quant[2]">
-                                    <span class="glyphicon glyphicon-minus"></span>
-                                  </button>
-                              </span>
-                              <input type="text" name="quant[2]" class="form-control input-number" value="${newAmount}" min="1" max="100">
-                              <span class="input-group-btn">
-                                  <button type="button" class="btn btn-success btn-number" data-type="${productId}" data-field="quant[2]">
-                                      <span class="glyphicon glyphicon-plus"></span>
-                                  </button>
-                              </span>
-                          </div>
-    `
-    setEventsForCardConfig()
-}
+
 
 function setEventsForCardConfig(){
+
     for(let btn of plusBtn){
         btn.addEventListener("click", evt =>{
             increase(evt)
@@ -133,3 +129,7 @@ function setEventsForCardConfig(){
         } )
     }
 }
+cartBtn[0].addEventListener("click",
+    evt => {
+        getCart()
+    })
