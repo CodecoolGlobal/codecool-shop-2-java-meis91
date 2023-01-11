@@ -6,18 +6,7 @@ const inputAmount = document.getElementsByClassName("form-control input-number")
 const minusBtn = document.getElementsByClassName("btn btn-danger btn-number");
 const total = document.getElementById("total-sum")
 
-
-
-/*checkoutListener();*/
-
 let totalSum = 0;
-
-
-let calculation = () =>{
-    return basket.map((x) => x.amount).reduce((x, y) => x + y, 0);
-}
-
-
 
 async function getCart(){
     title.innerHTML = "Your Cart"
@@ -27,7 +16,6 @@ async function getCart(){
     params.set("cart", JSON.stringify(shoppingCart))
     let response = await fetch("json/" + "?" + params.toString());
     let result = await response.json();
-
     for(let product of result){
         let amount = 0;
         for(let item of shoppingCart){
@@ -37,7 +25,6 @@ async function getCart(){
         }
         let sum = amount * product.defaultPrice;
         totalSum += sum;
-        //let amount = shoppingCart.find((x) => x.id === product.id)
         html += `
                 <div class="col col-sm-12 col-md-6 col-lg-4">
                 <div class="card">
@@ -50,7 +37,6 @@ async function getCart(){
                             <a class="card-text category-link" role="button" href="/category=${product.productCategory.id}" data-category-id=${product.productCategory.id}>${product.productCategory.name}</a><br>
                         <p style="display:inline"> Supplier: </p>
                             <a class="card-text supplier-link" role="button" href="/supplier=${product.supplier.id}" data-supplier_id=${product.supplier.id}>${product.supplier.name}</a>
-                      
                     </div>
                     <div class="card-body">
                         <div class="card-text">
@@ -82,12 +68,30 @@ async function getCart(){
         `
     }
     productsContainer.innerHTML = html;
-
-
-    console.log(total)
     await setEventsForCardConfig()
     await setTotalPrice()
     await checkoutListener()
+}
+
+async function submitCart(){
+    try {
+        const response = await fetch('json/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // your expected POST request payload goes here
+                title: "cart",
+                body: localStorage.getItem("cart")
+            })
+        });
+        console.log(response )
+        const data = await response.json();
+        console.log(data);
+    } catch(error) {
+        console.log(error)
+    }
 }
 
 
@@ -115,12 +119,6 @@ function increase(evt){
 }
 
 function setTotalPrice(){
-   /* const totalPriceDiv = document.createElement("div")
-    const pricePara = document.createElement("p")
-    pricePara.innerHTML = totalSum
-    totalPriceDiv.classList.add("card-text")
-    totalPriceDiv.appendChild(pricePara)
-    total.appendChild(totalPriceDiv)*/
     let totalHtml =  `
             <div class="total card-text">
                 <p><h3>Total Price: ${totalSum}</h3></p>
@@ -130,13 +128,10 @@ function setTotalPrice(){
             </div>
         `
     total.innerHTML = totalHtml;
-    /*let checkoutScript = "<script src=\"/script/checkOut.js\"></script>"
-    document.appendChild()*/
 }
 
 
 function setEventsForCardConfig(){
-
     for(let btn of plusBtn){
         btn.addEventListener("click", evt =>{
             increase(evt)
@@ -155,21 +150,24 @@ cartBtn[0].addEventListener("click",
     })
 
 function checkoutListener() {
-    let checkOutBtn = document.getElementById("checkoutBtn");
+    const checkOutBtn = document.getElementById("checkoutBtn");
     const modal = document.getElementById("checkoutModal");
     const span = document.getElementsByClassName("close")[0];
+    const submit = document.getElementById("user-registration-btn")
+
+    submit.addEventListener("click", evt => {
+        console.log("submiiit")
+        submitCart()
+    })
 
     checkOutBtn.addEventListener("click", function () {
         modal.style.display = "block";
     })
 
-
-// When the user clicks on <span> (x), close the modal
     span.onclick = function () {
         modal.style.display = "none";
     }
 
-// When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";

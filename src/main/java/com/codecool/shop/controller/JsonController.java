@@ -82,7 +82,9 @@ public class JsonController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println(req.getHeaderNames().toString());
+        System.out.println(req.getParameter("id"));
+        System.out.println("got the post req");
 
     }
 }
