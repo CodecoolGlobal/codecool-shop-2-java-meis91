@@ -73,35 +73,14 @@
     cursor: pointer;
 }
 
-.nav{
-    right: 15px;
-    font-size: 16px;
+.input-group{
+    width: 150px;
 }
 
-.user{
-    right: 50px;
+.total {
+    margin-left: 140px;
 }
 
-
-.cart{
-    position: relative;
-    padding: 8px;
-    border-radius: 4px;
-}
-
-.bi{
-    color: #575454;
-    font-size: 32px;
-}
-
-.cart-amount{
-    position: absolute;
-    top: -5px;
-    right: -3px;
-
-    font-size: 15px;
-    background-color: rgb(255, 87, 87);
-    color: black;
-    padding: 2px;
-    border-radius: 4px;
+.shipping-info{
+   margin: 100px 100px 100px 100px;
 }

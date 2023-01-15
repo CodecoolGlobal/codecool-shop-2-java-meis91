@@ -23,7 +23,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/shopping-cart/"})
 public class CartController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cartData = CartDaoMem.getInstance();
@@ -61,7 +60,7 @@ public class CartController extends HttpServlet {
         context.setVariable("products", cartService.getCart());
         context.setVariable("total_price", cartService.getTotalPrice());
         resp.getWriter().println("<!-- -->");
-        engine.process("product/cart.html", context, resp.getWriter());
+        engine.process("cart/shopping-cart.html", context, resp.getWriter());
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

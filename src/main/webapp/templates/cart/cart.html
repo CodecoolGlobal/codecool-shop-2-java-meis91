@@ -25,18 +25,18 @@
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <!-- End of Bootstrap components -->
 
-  <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="/css/custom.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
 <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Codecool Shop</a>
+    <a class="navbar-brand" href="/static">Codecool Shop</a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/static">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,55 +121,57 @@
         <h2>Customer Registration</h2>
         <span class="close">&times;</span>
       </div>
-      <div class="modal-body-personal-data">
-        <h3>Personal Data</h3>
-        <br>
-        <input style="position: center"type="text" id="modal-name"
-               name="modal-name" placeholder="Name" required="required">
-        <br>
-        <input style="position: center" type="text" id="modal-email"
-               name="modal-email" placeholder="E-Mail" required="required">
-        <br>
-        <input style="position: center" type="text" id="modal-phone-number"
-               name="modal-phone-number" placeholder="Phone Number">
-      </div>
-      <div class="modal-body-billing-address">
-        <h3>Billing Address</h3>
-        <br>
-        <input style="position: center"type="text" id="modal-country"
-               name="modal-country-billing" placeholder="Country">
-        <br>
-        <input style="position: center" type="text" id="modal-city"
-               name="modal-city-billing" placeholder="City">
-        <br>
-        <input style="position: center" type="text" id="modal-zipcode"
-               name="modal-zipcode-billing" placeholder="ZIP code">
-        <br>
-        <input style="position: center" type="text" id="modal-address"
-               name="modal-address-billing" placeholder="Address">
-      </div>
-      <div class="modal-body-personal-data">
-        <h3>Shipping Address</h3>
-        <br>
-        <input style="position: center"type="text" id="modal-country-shipping"
-               name="modal-country-shipping" placeholder="Country">
-        <br>
-        <input style="position: center" type="text" id="modal-city-shipping"
-               name="modal-city-shipping" placeholder="City">
-        <br>
-        <input style="position: center" type="text" id="modal-zipcode-shipping"
-               name="modal-zipcode-shipping" placeholder="ZIP code">
-        <br>
-        <input style="position: center" type="text" id="modal-address-shipping"
-               name="modal-address-shipping" placeholder="Address">
-      </div>
-      <div class="modal-footer">
-        <button id="user-registration-btn" type="submit">Submit</button>
+      <div class="shipping-info">
+        <div class="modal-body-personal-data">
+          <h3>Personal Data</h3>
+          <br>
+          <input style="position: center"type="text" id="modal-name"
+                 name="modal-name" placeholder="Name" required="required">
+          <br>
+          <input style="position: center" type="text" id="modal-email"
+                 name="modal-email" placeholder="E-Mail" required="required">
+          <br>
+          <input style="position: center" type="text" id="modal-phone-number"
+                 name="modal-phone-number" placeholder="Phone Number">
+        </div>
+        <div class="modal-body-personal-data">
+          <h3>Billing Address</h3>
+          <br>
+          <input style="position: center"type="text" id="modal-country"
+                 name="modal-country-billing" placeholder="Country">
+          <br>
+          <input style="position: center" type="text" id="modal-city"
+                 name="modal-city-billing" placeholder="City">
+          <br>
+          <input style="position: center" type="text" id="modal-zipcode"
+                 name="modal-zipcode-billing" placeholder="ZIP code">
+          <br>
+          <input style="position: center" type="text" id="modal-address"
+                 name="modal-address-billing" placeholder="Address">
+        </div>
+        <div class="modal-body-personal-data">
+          <h3>Shipping Address</h3>
+          <br>
+          <input style="position: center"type="text" id="modal-country-shipping"
+                 name="modal-country-shipping" placeholder="Country">
+          <br>
+          <input style="position: center" type="text" id="modal-city-shipping"
+                 name="modal-city-shipping" placeholder="City">
+          <br>
+          <input style="position: center" type="text" id="modal-zipcode-shipping"
+                 name="modal-zipcode-shipping" placeholder="ZIP code">
+          <br>
+          <input style="position: center" type="text" id="modal-address-shipping"
+                 name="modal-address-shipping" placeholder="Address">
+        </div>
+        <div class="modal-footer">
+          <button id="user-registration-btn" type="submit">Submit</button>
+        </div>
       </div>
     </div>
   </form>
 </div>
 <div th:replace="'base-templates/footer.html' :: copy"></div>
 </body>
-<script src="/static/script/checkOut.js"></script>
+<script src="/script/checkOut.js"></script>
 </html>
