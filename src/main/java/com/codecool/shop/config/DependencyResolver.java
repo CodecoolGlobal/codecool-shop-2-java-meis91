@@ -28,6 +28,7 @@ public class DependencyResolver {
         this.implementations.put(ProductCategoryDao.class, new ProductCategoryDaoJdbc(dataSource));
         this.implementations.put(ProductDao.class, new ProductDaoJdbc(dataSource));
         this.implementations.put(SupplierDao.class, new SupplierDaoJdbc(dataSource));
+        this.implementations.put(OrderDao.class, new OrderDaoJdbc(dataSource));
     }
 
     public <T> T getImplementation(Class<T> myInterface) {
